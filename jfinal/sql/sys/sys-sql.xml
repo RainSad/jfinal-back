@@ -1,0 +1,28 @@
+<sqlGroup name="sys">
+    <sql id="userList">
+      select u.*,d.name from sys_user u LEFT JOIN sys_department d  on u.departmentId=d.id
+    </sql>
+    <sql id="logList">
+      select * from sys_log 
+    </sql>
+     <sql id="dictList">
+       select * from sys_dict 
+    </sql>
+    <sql id="departmentList">
+    select * from sys_department 
+    </sql>
+    <sql id="roleList">
+      select * from sys_role 
+    </sql>
+    <sql id="dictitemList">
+    select * from sys_dictitem where level!=2
+    </sql>
+     <sql id="menuList">
+      select * from sys_privilege where type='F' 
+    </sql>
+    <sql id="privilegeList">
+      select * from sys_privilege where type='O' 
+    </sql>
+</sqlGroup>
+	
+ 
