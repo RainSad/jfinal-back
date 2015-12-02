@@ -1,5 +1,5 @@
 jfinal是由jfinal+freemarker+easyui写的一个后台管理系统，参考了jty等一些优秀的开源项目，实现了一个基础的后台管理系统。
-后台访问路径：http://localhost:8090/jfinal  
+在线访问：http://qq6278737.imwork.net/jfinal  
 
 启动类 cn.wawi.common.DefaultConfig
 
