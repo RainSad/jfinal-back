@@ -1,5 +1,5 @@
 jfinal是由jfinal+freemarker+easyui写的一个后台管理系统，参考了jty等一些优秀的开源项目，实现了一个基础的后台管理系统。
-在线访问：http://moriiy.wicp.net/jfinal/  
+在线访问：http://moriiy.wicp.net/jfinal/  有时可能无法访问，尽量白天访问，进入系统尽量不要做修改或删除操作。
 
 启动类 cn.wawi.common.DefaultConfig
 
