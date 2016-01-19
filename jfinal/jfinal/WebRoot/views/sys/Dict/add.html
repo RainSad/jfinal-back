@@ -1,0 +1,27 @@
+<form id="addForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td>标签：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="label" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td> 值：</td>
+			<td><input class="easyui-textbox" name="value" type="text" data-options="width: 150"/></td>
+		</tr>
+		<tr>
+			<td>类型：</td>
+			<td><input name="type" type="text" class="easyui-textbox" data-options="width: 150"/></td>
+		</tr>
+		<tr>
+			<td>状态：</td>
+		    <td><select class="easyui-combobox" name="status" data-options="width: 150"><option value="1">开启</option><option value="0">关闭</option></select></td>
+		</tr>
+		<tr>
+			<td>描述：</td>
+			<td><textarea rows="3" cols="41" name="description" style="font-size: 12px;font-family: '微软雅黑'"></textarea></td>
+		</tr>
+	</table>
+</form>

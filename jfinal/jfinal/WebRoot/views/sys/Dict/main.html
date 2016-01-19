@@ -1,0 +1,29 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/Dict.js"></script>
+</head>
+<body class="easyui-layout">
+<table id="dg" title="字典列表" class="easyui-datagrid">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" data-options="field:'label'" width="10%">标签</th>
+			<th align="center" data-options="field:'value'" width="10%">值</th>
+			<th align="center" data-options="field:'type'" width="10%">类型</th>
+			<th align="center" width="10%" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
+			<th align="center" width="10%" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+
+<div id="toolbar" style="padding:5px;height:auto;">
+    <@toolbar/>
+    <@form2/>
+</div>
+
+<div id="add" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:450px;height:280px;">
+<#include "add.html"/>
+</div>
+</body>
+</html>
