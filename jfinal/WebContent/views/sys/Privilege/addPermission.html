@@ -1,0 +1,39 @@
+<form id="addForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td>权限名称：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="name" type="text" class="easyui-textbox" style="width:150px;"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>权限编码：</td>
+			<td><input name="permCode" type="text" class="easyui-textbox" style="width:150px;"/></td>
+		</tr>
+		<tr>
+			<td>资源路径：</td>
+			<td><input name="url" type="text" class="easyui-textbox" style="width:150px;"/></td>
+		</tr>
+		<tr>
+			<td>排序：</td>
+			<td><input name="sort" type="text" class="easyui-textbox" style="width:150px;"/></td>
+		</tr>
+		<tr>
+			<td>类型：</td>
+		    <td><select class="easyui-combobox" name="type" style="width:150px;"><option value="F">菜单</option><option value="O">权限</option></select></td>
+		</tr>
+		<tr>
+			<td>状态：</td>
+		    <td><select class="easyui-combobox" name="status" style="width:150px;"><option value="1">开启</option><option value="0">关闭</option></select></td>
+		</tr>
+		<tr>
+			<td>上级菜单：</td>
+			<td><select class="easyui-combotree" name="_parentId" id="parent" style="width:150px;"></select></td>
+		</tr>
+		<tr>
+			<td>描述：</td>
+			<td><textarea rows="3" cols="41" name="description" style="font-size: 12px;font-family: '微软雅黑'"></textarea></td>
+		</tr>
+	</table>
+</form>

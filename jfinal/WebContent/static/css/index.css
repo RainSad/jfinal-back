@@ -1,0 +1,76 @@
+/****************北部样式*********************/
+.north{
+	height: 80px;
+	overflow: hidden;
+}
+.north_top{
+   float: left;
+   height: 52px;
+   width: 100%;
+}
+.north_left{
+	float: left;
+	width: 30%;
+	font-size: 21px;
+	font: xx-large;
+	margin-top:10px;
+	margin-left:10px;
+}
+.north_right{
+	width: *%;
+	float: right;
+	margin-top: 5px;
+	margin-right: 10px;
+}
+.north_bar{
+	width: 100%;
+	height: 28px;
+    font-weight: normal;
+    padding: 0;
+    margin-top: 51px;
+}
+.north_bar #infobar {
+	height: 26px; 
+	line-height: 26px;
+	margin-left: 5px; 
+	float: left;
+}
+.icon-hamburg-user{
+	padding-left: 25px; 
+	background-position: left center;
+}
+.north_bar #buttonbar { float: right;
+	height: 26px;
+	margin-right: 5px;
+	padding-top: 1px;
+	text-align: right;
+}
+#searchbar{
+	float: left;
+	margin-left: 30%;
+}
+/****************南部样式*********************/
+.south{
+	height: 70px;
+}
+.south .content{
+	color: #4e5766; 
+	padding: 6px 0px 0px 0px; 
+	margin: 0px auto; 
+	text-align: center; 
+	font-size:12px; 
+	font-family:微软雅黑;
+}
+/****************中部样式*********************/
+.tabs-tool table {
+	border-width: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.tabs-tool table td { 
+	padding: 0; 
+}
+.center_index{
+	overflow: hidden;
+	margin-top: 5%;
+}

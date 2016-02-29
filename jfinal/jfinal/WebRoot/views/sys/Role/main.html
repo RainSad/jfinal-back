@@ -1,0 +1,49 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/Role.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center',split:true,border:false,title:'角色列表'">
+<table id="dg">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" data-options="field:'name'" width="10%">名称</th>
+			<th align="center" data-options="field:'roleCode'" width="10%">编码</th>
+			<th align="center" width="10%" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
+			<th align="center" data-options="field:'description'">描述</th>
+			<th align="center" data-options="field:'operate',formatter:role.formatter" >操作</th>
+		</tr>
+	</thead>
+</table>
+</div>
+
+<div data-options="region:'east',split:true,border:false,title:'权限列表'" style="width: 425px">
+  <table id="tg">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true,hidden:true"></th>
+			<th data-options="field:'name'" width="100">名称</th>
+			<th width="100" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+</div>
+
+<div id="toolbar1" style="padding:5px;height:auto;">
+	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="role.savePermission()">保存授权</a>
+	<span class="toolbar-item dialog-tool-separator"></span>
+	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="">恢复</a>
+</div>
+<div id="toolbar" style="padding:5px;height:auto;">
+    <@toolbar/>
+</div>
+
+<div id="add" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:380px;">
+<#include "add.html"/>
+</div>
+
+</body>
+</html>
