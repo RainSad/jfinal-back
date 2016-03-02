@@ -1,54 +1,41 @@
-var privilege=privilege||{};
 $(function() {
-	easyExt.initUrl('/sys_privilege');
-	easyExt.init();
 	//权限列表
-	$('#dg').datagrid({
-		singleSelect: true,
-		onBeforeLoad: function(row,param) {
-			 if(!row){
-				 param.type='O';
-			 }
-	     }
+	easyExt.initTreeGrid('#tg','/sys_privilege/findAll'); 
+	easyExt.initDataGrid('#dg','/sys_privilege/findAllByPage');
+	
+	//删除实现
+	$("#del").click(function(){
+		var selRows=$('#tg').treegrid('getSelections');
+		easyExt.del(selRows,'/sys_privilege/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#tg').treegrid('reload'); 
+		});
 	});
-	//菜单列表
-	$('#tg').treegrid({
-		 url:easyExt.url+'/findAll',
-		 method: 'get',
-	     fit : true,
-		 fitColumns : true,
-		 border : false,
-		 idField : 'id',
-		 treeField:'name',
-		 iconCls: 'iconCls',
-		 striped: true,
-		 singleSelect: true,
-		 autoRowHeight: false,
-		 rownumbers: true,
-		 showRefresh: true,
-		 animate:true,
-		 onClickRow: function(row){
-			 $('#dg').datagrid('load',{parentId:row.id});
-		 },
-		 onBeforeLoad: function(row,param) {
-			 if(!row){
-				 param.type='F';
-			 }
-	     }
-	 });
-});
-easyExt.addExt=function(){
+	//添加实现
+	$("#add").click(function(){
+		easyExt.add('/sys_privilege/addOne',function(){
+			$('#tg').treegrid('reload'); 
+		});
+	});
+	//修改实现
+	$("#edit").click(function(){
+		var selRows=$('#tg').treegrid('getSelections');
+		easyExt.edit(selRows,'/sys_privilege/updateOne');
+	});
+	//添加基本权限
+	$("#addPermission").click(function(){
+		var selRows=$('#tg').treegrid('getSelections');//返回选中行
+		easyExt.ajax({url:easyExt.url+"/sys_privilege/addPermission?pId="+selRows[0].id,type:'GET'},function(data, status, xhr){
+			if(data){
+				$.messager.alert("提示", "添加基本权限成功！", "info");
+			}
+		});
+	});
 	//上级菜单
 	$('#parent').combotree({
 		width:180,
 		method:'GET',
-	    url: easyExt.url+'/getMenu',
+	    url: easyExt.url+'/sys_privilege/getMenu',
 		iconCls: 'iconCls',
 	    animate:true
 	}); 
-};
-privilege.addPermission=function(){
-	var selRows=$('#tg').treegrid('getSelections');//返回选中行
-	easyExt.ajax(easyExt.url+"/addPermission?pId="+selRows[0].id,"GET",{});
-	$('#tg').treegrid('reload');
-};
+});

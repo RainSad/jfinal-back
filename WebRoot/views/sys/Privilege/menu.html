@@ -3,7 +3,11 @@
 <script type="text/javascript" src="${ctx}/static/js/sys/menu.js"></script>
 </head>
 <body class="easyui-layout">
-<table id="tg" title="菜单列表" class="easyui-treegrid">
+<table id="tg" title="菜单列表" data-options="toolbar:'#toolbar',singleSelect: false,onBeforeLoad:function(row,param){
+       		if(!row){
+				 param.type='F';
+			}
+}">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -18,13 +22,13 @@
 
 <div id="toolbar" style="padding:5px;height:auto;">
     <div id="toolbar" style="display:inline;margin-left:5px;">
-     <a class="easyui-linkbutton" onclick="easyExt.add()" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" onclick="easyExt.del()" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" onclick="easyExt.edit()" iconCls="icon-edit" plain="true">修改</a>
+     <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
 	</div>
 </div>
 
-<div id="add" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
 <#include "addMenu.html"/>
 </div>
 </body>

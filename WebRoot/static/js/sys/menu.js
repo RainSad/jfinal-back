@@ -1,37 +1,34 @@
 $(function() {
-	easyExt.initUrl('/sys_privilege');
-	//菜单列表
-	$('#tg').treegrid({
-		 url: easyExt.url+'/findAll',
-		 method: 'get',
-		 fitColumns : true,
-		 idField : 'id',
-		 treeField:'name',
-		 fit : true,
-		 rownumbers: true,
-		 toolbar: '#toolbar',
-		 pageSize: 10,
-		 autoRowHeight: false,
-		 showRefresh: true,
-		 pagination: true,
-		 animate: true,
-		 collapsible: true,
-		 pagePosition: 'bottom',
-		 onBeforeLoad: function(row,param) {
-			 if(!row){
-				 param.type='F';
-			 }
-	     }
-	 }).treegrid('clientPaging');
+	//初始化表格
+	easyExt.initTreeGrid('#tg','/sys_privilege/findAll'); 
 	
-});
-easyExt.addExt=function(){
+	//删除实现
+	$("#del").click(function(){
+		var selRows=$('#tg').treegrid('getSelections');
+		easyExt.del(selRows,'/sys_privilege/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#tg').treegrid('reload'); 
+		});
+	});
+	//添加实现
+	$("#add").click(function(){
+		easyExt.add('/sys_privilege/addOne',function(){
+			$('#tg').treegrid('reload'); 
+		});
+	});
+	//修改实现
+	$("#edit").click(function(){
+		var selRows=$('#tg').treegrid('getSelections');
+		easyExt.edit(selRows,'/sys_privilege/updateOne',function(){
+			$('#tg').treegrid('reload'); 
+		});
+	});
 	//上级菜单
 	$('#parent').combotree({
 		width:180,
 		method:'GET',
-	    url: easyExt.url+'/getMenu',
+	    url: easyExt.url+'/sys_privilege/getMenu',
 		iconCls: 'iconCls',
 	    animate:true
 	}); 
-};
+});
+

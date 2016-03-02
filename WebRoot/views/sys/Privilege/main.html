@@ -4,7 +4,11 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'west',split:true,border:false,title:'菜单列表'"  style="width: 300px">
-<table id="tg" class="easyui-treegrid">
+<table id="tg" data-options="singleSelect: true,onBeforeLoad: function(row,param){
+  			 if(!row){
+				 param.type='F';
+			 }
+},onClickRow: function(row){$('#dg').datagrid('load',{parentId:row.id});}">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -14,7 +18,11 @@
 </table>
   </div> 
   <div data-options="region:'center',split:true,border:false,title:'权限列表'">
-<table id="dg" class="easyui-datagrid">
+<table id="dg" data-options="toolbar:'#toolbar', singleSelect: true,onBeforeLoad: function(row,param){
+  			 if(!row){
+				 param.type='O';
+			 }
+}">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -31,14 +39,14 @@
 </div>
 <div id="toolbar" style="padding:5px;height:auto;">
     <div style="display:inline;margin-left:5px;">
-      <a class="easyui-linkbutton" onclick="easyExt.add()" data-options="iconCls:'icon-add',plain:true">添加</a>
-	  <a class="easyui-linkbutton" onclick="easyExt.del()" data-options="iconCls:'icon-remove',plain:true">删除</a>
-	  <a class="easyui-linkbutton" onclick="easyExt.edit()" data-options="iconCls:'icon-edit',plain:true">修改</a>
-	  <a class="easyui-linkbutton" onclick="privilege.addPermission()" data-options="iconCls:'icon-add',plain:true">添加基本权限(增删改查)</a>
+      <a class="easyui-linkbutton" id="add" data-options="iconCls:'icon-add',plain:true">添加</a>
+	  <a class="easyui-linkbutton" id="del" data-options="iconCls:'icon-remove',plain:true">删除</a>
+	  <a class="easyui-linkbutton" id="edit" data-options="iconCls:'icon-edit',plain:true">修改</a>
+	  <a class="easyui-linkbutton" id="addPermission" data-options="iconCls:'icon-add',plain:true">添加基本权限(增删改查)</a>
 	</div>
 </div>
 
-<div id="add" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
 <#include "addPermission.html"/>
 </div>
 

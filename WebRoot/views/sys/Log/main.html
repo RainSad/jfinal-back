@@ -3,7 +3,7 @@
 <script type="text/javascript" src="${ctx}/static/js/sys/Log.js"></script>
 </head>
 <body class="easyui-layout">
-<table id="dg" title="日志列表" class="easyui-datagrid">
+<table id="dg" title="日志列表" data-options="toolbar:'#toolbar'">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -24,14 +24,14 @@
 
 <div id="toolbar" style="padding:5px;height:auto;">
     <div style="display:inline;margin-left:5px;">
-	 <a class="easyui-linkbutton" onclick="del()" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" onclick="easyExt.exportExcel()" data-options="iconCls:'icon-standard-page-excel',plain:true">导出excel</a>
+	 <a class="easyui-linkbutton" id="del" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="excel" data-options="iconCls:'icon-standard-page-excel',plain:true">导出excel</a>
 	</div>
 	<div style="margin-left:4px;">
 	  <form action="#" id="tForm" style="display:inline;">
 	     <span style="margin-left:5px;">时间: <input class="easyui-datebox" style="width:120px;" name="startTime"></input>-<input class="easyui-datebox" name="endTime" style="width:120px"></input></span>
 	     <span style="margin-left:5px;">综合搜索: <input class="easyui-textbox" style="width:120px;" name="name"></input></span>
-	     <a href="#" class="easyui-linkbutton" style="width:150px;margin-right:5px;float:right;" onclick="easyExt.searchs()" data-options="iconCls:'icon-search',plain:true">查询</a>
+	     <a href="#" class="easyui-linkbutton" style="width:150px;margin-right:5px;float:right;" id="search" data-options="iconCls:'icon-search',plain:true">查询</a>
       </form>
    </div>
 </div>

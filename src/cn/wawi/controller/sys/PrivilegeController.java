@@ -16,11 +16,10 @@ public class PrivilegeController extends BaseController<Privilege>{
 	 */
 	@Permission("sys:role:savePrivilege")
 	public void addPermission(){
-		int[] i=Db.batch("insert into sys_privilege(name,perm_code,description,parentId,sort,type)", new Object[][]{{"添加 ","add","拥有添加权限",getPara("pId"),"99","O"},{"删除 ","delete","拥有删除权限",getPara("pId"),"99","O"},{"修改 ","update","拥有修改权限",getPara("pId"),"99","O"},{"查看 ","view","拥有查看权限",getPara("pId"),"99","O"}}, 1000);
+		int[] i=Db.batch("insert into sys_privilege(name,permCode,description,parentId,sort,type) values(?,?,?,?,?,?)", new Object[][]{{"添加 ","add","拥有添加权限",getPara("pId"),"99","O"},{"删除 ","delete","拥有删除权限",getPara("pId"),"99","O"},{"修改 ","update","拥有修改权限",getPara("pId"),"99","O"},{"查看 ","view","拥有查看权限",getPara("pId"),"99","O"}}, 1000);
 		if(i==null||i.length<0){
 			json.setResMsg("添加基本权限失败!");
 			json.setResCode(0);
-			
 		}
 		render(new JsonRender(json).forIE());
 	}

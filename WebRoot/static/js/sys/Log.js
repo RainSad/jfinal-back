@@ -1,34 +1,20 @@
 $(function() {
-	easyExt.initUrl('/sys_log');
-	easyExt.init();//初始化表格
-});
-function del(){
-	var selRows=null;
-	try{
-		selRows=$('#dg').datagrid('getSelections');//返回选中行
-	}catch(e){
-		selRows=$('#tg').treegrid('getSelections');//返回选中行
-	}
-	if(selRows.length==0){
-		$.messager.alert("提示", "请选择要删除的行！", "info");  
-		return;
-	}else{
-		var ids="";  
-        //批量获取选中行的ID  
-        for (i = 0; i < selRows.length;i++) {  
-            if (ids =="") {  
-            	ids = selRows[i].id;  
-            } else {  
-            	ids = selRows[i].id + "," + ids;  
-            }                 
-        }  
-        $.messager.confirm('提示', '是否删除选中数据?', function (r) {  
-            if (!r) {  
-                return;  
-            }  
-            easyExt.ajax(easyExt.url+"/deleteBatch","GET",{ids:ids});
+	//初始化表格
+	easyExt.initDataGrid('#dg','/sys_log/findAllByPage');
+	//删除实现
+	$("#del").click(function(){
+		var selRows=$('#dg').datagrid('getSelections');
+		easyExt.del(selRows,'/sys_log/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
 			$('#dg').datagrid('reload'); 
 			$('#dg').datagrid('clearSelections');  
-        });
-	}
-};
+		});
+	});
+	//导出实现
+	$("#excel").click(function(){
+		easyExt.exportExcel('/sys_log/exportExcel?'+$('#tForm').serialize());
+	});
+	//搜索实现
+	$("#search").click(function(){
+		$('#dg').datagrid('load',$('#tForm').serializeJson());
+	});
+});

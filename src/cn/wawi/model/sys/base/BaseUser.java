@@ -84,7 +84,7 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 	public void setBirthday(java.util.Date birthday) {
 		set("birthday", birthday);
 	}
-
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	public java.util.Date getBirthday() {
 		return get("birthday");
 	}

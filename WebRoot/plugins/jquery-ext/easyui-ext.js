@@ -1,36 +1,45 @@
+/**
+ * 提供easyui工具类
+ */
 var easyExt=easyExt||{};
 easyExt.url=$u.getRootPath();
-easyExt.initUrl=function(url){
-	easyExt.url+=url;
-};
-easyExt.initTreeGrid=function(){
-	$('#tg').treegrid({
-		 url: easyExt.url+'/findAll',
+/**
+ * url: 远程端请求地址
+ * 初始化easyui树形表格
+ */
+easyExt.initTreeGrid=function(id,url){
+	$(id).treegrid({
+		 url: easyExt.url+url,
 		 method: 'get',
 		 fitColumns : true,
 		 idField : 'id',
 		 treeField:'name',
 		 fit : true,
 		 rownumbers: true,
-		 toolbar: '#toolbar',
 		 pageSize: 10,
 		 autoRowHeight: false,
 		 showRefresh: true,
 		 pagination: true,
 		 animate: true,
 		 collapsible: true,
-		 pagePosition: 'bottom'
+		 pagePosition: 'bottom',
+		 onLoadError: function(){
+			 $.messager.alert("提示", "数据加载失败！", "info");
+		 }
 	 }).treegrid('clientPaging');
 };
-easyExt.init=function(){
-	$('#dg').datagrid({
-		 url: easyExt.url+'/findAllByPage',
+/**
+ * url: 远程端请求地址
+ * 初始化easyui表格
+ */
+easyExt.initDataGrid=function(id,url){
+	$(id).datagrid({
+		 url: easyExt.url+url,
 		 striped: true,
 		 fit : true,
 		 method: 'get',
 		 autoRowHeight:false,
 		 pagination: true,
-		 toolbar: '#toolbar',
 		 showRefresh: true,
 		 pagePosition: 'bottom',
 		 nowrap: true,
@@ -42,21 +51,22 @@ easyExt.init=function(){
 			 $.messager.alert("提示", "数据加载失败！", "info");
 		 },
 		 onLoadSuccess: function(){
-			 $('#dg').datagrid('tooltip');
+			 $(id).datagrid('tooltip');
 		 }
 	 });
 };
-easyExt.exportExcel=function(){
-	var url = easyExt.url+"/exportExcel?"+$('#tForm').serialize();
-	window.location.href = url;
+/**
+ * url: 远程端请求地址
+ * 导出excel
+ */
+easyExt.exportExcel=function(url){
+	window.location.href = easyExt.url+url;
 };
-easyExt.del=function(){
-	var selRows=null;
-	try{
-		selRows=$('#dg').datagrid('getSelections');//返回选中行
-	}catch(e){
-		selRows=$('#tg').treegrid('getSelections');//返回选中行
-	}
+/**
+ * url: 远程端请求地址
+ * easyui--删除
+ */
+easyExt.del=function(selRows,url,callback){
 	if(selRows.length==0){
 		$.messager.alert("提示", "请选择要删除的行！", "info");  
 		return;
@@ -70,79 +80,80 @@ easyExt.del=function(){
             	ids = selRows[i].id + "," + ids;  
             }                 
         }  
-        $.messager.confirm('提示', '是否删除选中数据?', function (r) {  
+        $.messager.confirm('提示', '是否删除选中数据,?', function (r) {  
             if (!r) {  
                 return;  
             }  
-            easyExt.ajax(easyExt.url+"/updateBatch","GET",{ids:ids});
-			try{
-				$('#dg').datagrid('reload'); 
-				$('#dg').datagrid('clearSelections');  
-			}catch(e){
-				$('#tg').treegrid('reload');
-				$('#tg').treegrid('clearSelections');
-			}
+            easyExt.ajax({url:easyExt.url+url,type:'GET',data:{ids:ids}},function(data,status, xhr){
+            	if(data.resCode=='1'||data.resCode==1){
+       			 if(typeof callback == "function") 
+   				  callback();
+            	}else{
+            		
+            	}
+            });
         });
 	}
 };
-easyExt.add=function(){
+/**
+ * url: 远程端请求地址
+ * easyui--添加
+ */
+easyExt.add=function(url,callback){
 	$('#addForm').form('clear');
-	$('#add').dialog({
+	$('#addDialog').dialog({
 		iconCls:'icon-save',
 		title:'添加信息',  
 		buttons:[{
 				text:'确认',
 				handler:function(){
-					easyExt.form(easyExt.url+'/addOne');
+					easyExt.form(easyExt.url+url,callback);
 				}
 			},{
 				text:'取消',
 				handler:function(){
-					$('#add').dialog('close');
+					$('#addDialog').dialog('close');
 			}
 	    }]
 	});
-	$('#add').dialog('open');
-	easyExt.addExt();
+	$('#addDialog').dialog('open');
 };
-//用于扩展打开一个dialog后执行的事件
-easyExt.addExt=function(){
-	
-};
-easyExt.edit=function(){
-	var selRows=null;
-	try{
-		selRows=$('#dg').datagrid('getSelections');//返回选中行
-	}catch(e){
-		selRows=$('#tg').treegrid('getSelections');//返回选中行
-	}
+/**
+ * url: 远程端请求地址
+ * easyui--修改
+ */
+easyExt.edit=function(selRows,url,callback){
 	$('#addForm').form('clear');
 	if(selRows.length==0){
 		$.messager.alert("提示", "请选择要修改的行！", "info");  
 		return;
 	}else if(selRows.length==1){
-		$('#add').dialog({
+		$('#addDialog').dialog({
 			iconCls:'icon-edit',
 			title:'修改信息',
 		    buttons:[{
 				text:'确认',
 				handler:function(){
-					easyExt.form(easyExt.url+'/updateOne');
+					easyExt.form(easyExt.url+url,callback);
 				}
 		      },{
 				text:'取消',
 				handler:function(){
-					$('#add').dialog('close');
+					$('#addDialog').dialog('close');
 			    }
 	        }]
 		});
-		$('#add').dialog('open');
+		$('#addDialog').dialog('open');
 		$('#addForm').form('myLoad',selRows[0]);
 	}else{
 		$.messager.alert("提示", "只能单项修改,请选择一行！", "info");
 	}
 };
-easyExt.form=function($url){
+/**
+ * url: 远程端请求地址
+ * easyui--表单提交
+ */
+easyExt.form=function($url,callback){
 	$('#addForm').form('submit', {
 		url:$url,
 	    onSubmit: function(){    
@@ -151,14 +162,11 @@ easyExt.form=function($url){
 	    },
 	    success: function(data){
 			var data = JSON.parse(data); 
-			if (data.resCode==1){
+			if(data.resCode=='1'||data.resCode==1){
 				$.messager.alert("提示", "操作成功！", "info"); 
-				$('#add').dialog('close');
-				try{
-					$('#dg').datagrid('reload'); 
-					$('#tg').treegrid('reload');
-				}catch(e){
-				}
+				$('#addDialog').dialog('close');
+				 if(typeof callback == "function") 
+					  callback();
 			}else{
 				$.messager.alert("提示", "操作失败！", "info"); 
 			}
@@ -166,60 +174,25 @@ easyExt.form=function($url){
 	});
 };
 
-easyExt.viewDialog=function(index){
-	$('#dg').datagrid('clearSelections'); //清除选择项
-	var json=$('#dg').datagrid('getData').rows[index];
-	$('#view').dialog({closed: true,title:'查看信息'});
-	$('#view').dialog('open');
-	$('#viewForm').form('load',json);
-	$("#viewForm input").prop("readonly", true);
-};
-
-/*easyExt.updateStatus=function(id,status){
-	easyExt.ajax(easyExt.url+"/update","POST",{status:status,id:id});
-	$('#dg').datagrid('reload'); 
-};
-easyExt.initPassword=function(id){
-	var pwd='******';
-	easyExt.ajax(easyExt.url+"/update","POST",{password:pwd,id:id});
-};*/
-
-easyExt.formaterOperate=function(value,row,index){
-	 var s="<a href='#' style='text-decoration: none;' onclick='easyExt.viewDialog("+'"'+index+'"'+")'>查看 | </a>";
-	  if(row.status=='1'){
-	    s+="<a href='#' style='text-decoration: none;' onclick='easyExt.updateStatus("+'"'+row.id+'","'+"0"+'"'+")'>关闭</a>";
-	    return s;
-	  }else{
-	    s+="<a href='#' style='text-decoration: none;' onclick='easyExt.updateStatus("+'"'+row.id+'","'+"1"+'"'+")'>开启</a>";
-	    return s;
-	  }
-	 return s;
-};
-
-easyExt.searchs=function(){
-	   var o = {};  
-	    $('#dg').datagrid('load',$('#tForm').serializeJson());
-};
-easyExt.ajax=function($url,$type,$data){
-	var $datas={};
-    $.ajax({
-    	url: $url,
-    	type: $type,
-    	data: $data,
+/**
+ * jquery--ajax请求
+ */
+easyExt.ajax=function(opt,callback){
+	opt.type = (opt.type==null || opt.type=="" || typeof(opt.type)=="undefined")? "post" : opt.type;
+	opt.data = (opt.data==null || opt.data=="" || typeof(opt.data)=="undefined")? {"date": new Date().getTime()} : opt.data;
+	$.ajax({
+    	url: opt.url,
+    	type: opt.type,
+    	data: opt.data,
     	dataType: 'json',
     	contentType:'application/json;charset=utf-8',
     	timeout: 5000
-    	}).done(function(data, status, xhr){  
-    		$datas=data;
-    		if(data.resCode=='1'){
-    			$.messager.alert("提示", "操作成功！", "info");
-    			$('#dg').datagrid('reload'); 
-    		}else{
-    			$.messager.alert("提示", "操作失败！", "info");
-    		}
+    	}).done(function(data, status, xhr){
+    		//$.messager.alert("提示", "请求成功！", "info");
+   			 if(typeof callback == "function") 
+   				callback(data,status, xhr);
     	}).fail(function(data, status, xhr){
     		$.messager.alert("提示", "请求失败！", "info");
     		return;
     });
-    return $datas;
 };

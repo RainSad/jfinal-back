@@ -67,18 +67,13 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 * 通用根据id查找
 	 */
 	public void findById(){
-		if(getParaToInt("id")==null){
-			json.setResMsg("查找的id为null!");
-			json.setResCode(0);
-		}else{
-			M record=getModel(clazz).findById(tablename,getParaToInt("id"));
-			List<M> list=new ArrayList<M>();
-			list.add(record);
-			json.setRows(list);
-			json.getResData().put("rows",list);
-			json.getResData().put("total", list.size());
-			json.setTotal(1L);
-		}
+		M record=getModel(clazz).findById(tablename,getParaToInt("id"));
+		List<M> list=new ArrayList<M>();
+		list.add(record);
+		json.setRows(list);
+		json.getResData().put("rows",list);
+		json.getResData().put("total", list.size());
+		json.setTotal(1L);
 		render(new JsonRender(json).forIE());
 	}
 
@@ -87,15 +82,10 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	@Permission("add")
 	public void addOne(){
-		if(StrKit.isBlank(getPara())){
-			json.setResMsg("添加失败,请求参数为null!");
+		Model<?> m=getModel(clazz);
+		if(!m.save()){
+			json.setResMsg("添加失败!");
 			json.setResCode(0);
-		}else{
-			Model<?> m=getModel(clazz);
-			if(!m.save()){
-				json.setResMsg("添加失败!");
-				json.setResCode(0);
-			}
 		}
 		render(new JsonRender(json).forIE());
 	}
@@ -105,15 +95,10 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	@Permission("update")
 	public void updateOne(){
-		if(StrKit.isBlank(getPara())){
-			json.setResMsg("修改失败,请求参数为null!");
+		Model<?> m=getModel(clazz);
+		if(!m.update()){
+			json.setResMsg("修改失败!");
 			json.setResCode(0);
-		}else{
-			Model<?> m=getModel(clazz);
-			if(!m.update()){
-				json.setResMsg("修改失败!");
-				json.setResCode(0);
-			}
 		}
 		render(new JsonRender(json).forIE());
 	}
@@ -122,14 +107,9 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	@Permission("delete")
 	public void delOne(){
-		if(StrKit.isBlank(getPara())){
-			json.setResMsg("删除失败,请求参数为null!");
+		if(!getModel(clazz).delete()){
+			json.setResMsg("删除失败!");
 			json.setResCode(0);
-		}else{
-			if(!getModel(clazz).delete()){
-				json.setResMsg("删除失败!");
-				json.setResCode(0);
-			}
 		}
 		render(new JsonRender(json).forIE());
 	}
@@ -138,15 +118,10 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	@Permission("delete")
 	public void deleteBatch(){
-		if(StrKit.isBlank(getPara("ids"))){
-			json.setResMsg("p批量删除失败，ids为null!");
+		String ids=getPara("ids");
+		if(Db.update("delete from "+tablename+" where id in ("+ids+")")<=0){
+			json.setResMsg("批量删除失败!");
 			json.setResCode(0);
-		}else{
-			String ids=getPara("ids");
-			if(Db.update("delete from "+tablename+" where id ("+ids+")")<=0){
-				json.setResMsg("批量删除失败!");
-				json.setResCode(0);
-			}
 		}
 		render(new JsonRender(json).forIE());
 	}
@@ -156,15 +131,10 @@ public abstract class BaseController<M extends Model<M>> extends Controller{
 	 */
 	@Permission("update")
 	public void updateBatch(){
-		if(StrKit.isBlank(getPara("ids"))){
-			json.setResMsg("批量更新状态失败，ids为null!");
+		String ids=getPara("ids");
+		if(Db.update("update "+tablename+" set status=0 where id in ("+ids+")")<=0){
+			json.setResMsg("批量更新失败!");
 			json.setResCode(0);
-		}else{
-			String ids=getPara("ids");
-			if(Db.update("update "+tablename+" set status=0 where id in ("+ids+")")<=0){
-				json.setResMsg("批量更新失败!");
-				json.setResCode(0);
-			}
 		}
 		render(new JsonRender(json).forIE());
 	}

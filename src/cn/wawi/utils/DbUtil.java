@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -58,8 +57,6 @@ public class DbUtil {
 				if (children != null && children.size() > 0){
 					map.put("children", children);
 					map.put("state", "closed");
-				}else{
-					map.put("state", "open");
 				}
 				permissions.add(map);
 			}
@@ -82,8 +79,6 @@ public class DbUtil {
 				if (c != null && c.size() > 0){
 					map.put("children", c);
 					map.put("state", "closed");
-				}else{
-					map.put("state", "open");
 				}
 				children.add(map);
 			}

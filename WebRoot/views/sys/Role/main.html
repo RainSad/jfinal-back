@@ -4,7 +4,7 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center',split:true,border:false,title:'角色列表'">
-<table id="dg">
+<table id="dg" data-options="toolbar:'#toolbar'">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -13,14 +13,20 @@
 			<th align="center" data-options="field:'roleCode'" width="10%">编码</th>
 			<th align="center" width="10%" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
 			<th align="center" data-options="field:'description'">描述</th>
-			<th align="center" data-options="field:'operate',formatter:role.formatter" >操作</th>
+			<th align="center" data-options="field:'operate',formatter:formatter" >操作</th>
 		</tr>
 	</thead>
 </table>
 </div>
 
-<div data-options="region:'east',split:true,border:false,title:'权限列表'" style="width: 425px">
-  <table id="tg">
+<div data-options="region:'east',split:true,border:false,title:'权限列表'" style="width: 425px" >
+  <table id="tg" data-options="toolbar:'#toolbar1',singleSelect: false, onClickRow: function(row){
+       	   	 //级联选择  
+            $(this).treegrid('cascadeCheck',{  
+                id:row.id, //节点ID  
+                deepCascade:true //深度级联  
+            }); 
+  }">
 	<thead>
 		<tr>
 			<th data-options="field:'id',hidden:true">id</th>
@@ -33,19 +39,19 @@
 </div>
 
 <div id="toolbar1" style="padding:5px;height:auto;">
-	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="role.savePermission()">保存授权</a>
+	<a class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="savePermission()">保存授权</a>
 	<span class="toolbar-item dialog-tool-separator"></span>
-	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="">恢复</a>
+	<a class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">恢复</a>
 </div>
 <div id="toolbar" style="padding:5px;height:auto;">
      <div id="toolbar" style="display:inline;margin-left:5px;">
-     <a class="easyui-linkbutton" onclick="easyExt.add()" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" onclick="easyExt.del()" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
-	 <a class="easyui-linkbutton" onclick="easyExt.edit()" iconCls="icon-edit" plain="true">修改</a>
+     <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
 	</div>
 </div>
 
-<div id="add" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:380px;">
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:380px;">
 <#include "add.html"/>
 </div>
 
