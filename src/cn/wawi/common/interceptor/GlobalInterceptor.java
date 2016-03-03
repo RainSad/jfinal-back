@@ -1,6 +1,7 @@
 package cn.wawi.common.interceptor;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,7 @@ public class GlobalInterceptor implements Interceptor{
 				log.set("os", userAgent.getOperatingSystem().getName());
 				log.set("ip", StringUtil.getIpAddr(request));
 				log.set("browser", userAgent.getBrowser().getName());
+				log.set("inputTime", new Date());
 				HashMap map=new HashMap(request.getParameterMap()); 
 				if(map.containsKey("password")){
 					map.put("password", new String[]{"******"});
