@@ -1,7 +1,6 @@
 package cn.wawi.common;
 
 import cn.wawi.common.interceptor.GlobalInterceptor;
-
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;

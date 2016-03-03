@@ -34,8 +34,12 @@ public class GlobalInterceptor implements Interceptor{
 		Method method=invocation.getMethod();
 		Permission permission = method.getAnnotation(Permission.class);
 		User user=c.getSessionAttr("loginUser");
-		if(user==null&&!c.getRequest().getRequestURL().toString().contains("/sys_user/login")){
-			c.renderFreeMarker("/login.html");
+		if(user==null){
+			if(c.getRequest().getRequestURI().contains("/sys_user/login")){
+				invoke(c,invocation);
+			}else{
+				c.renderFreeMarker("/login.html");
+			}
 		}else{
 			flag=permission==null?true:hasPermission(user,permission.value());
 			if(flag){
