@@ -1,17 +1,15 @@
 package cn.wawi.controller.sys;
 
-import cn.wawi.common.interceptor.GlobalInterceptor;
+import cn.wawi.common.annotation.Logs;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Privilege;
 import cn.wawi.model.sys.User;
-
-import com.jfinal.aop.Clear;
 import com.jfinal.ext.route.ControllerBind;
 
 @ControllerBind(controllerKey="/sys_user")
 public class UserController extends BaseController<User>{
 
-	@Clear(value={GlobalInterceptor.class})
+	@Logs(des="用户登录")
 	public void login() {
         if(!getPara("captcha").equalsIgnoreCase((String) getSession().getAttribute("kaptcha"))){
         	setAttr("msg", "验证码错误!");
