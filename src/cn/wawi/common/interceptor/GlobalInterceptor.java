@@ -34,18 +34,18 @@ public class GlobalInterceptor implements Interceptor{
 		Method method=invocation.getMethod();
 		Permission permission = method.getAnnotation(Permission.class);
 		User user=c.getSessionAttr("loginUser");
-		if(user==null){
-			if(c.getRequest().getRequestURI().contains("/sys_user/login")){
-				invoke(c,invocation);
-			}else{
-				c.renderFreeMarker("/login.html");
-			}
+		if(c.getRequest().getRequestURL().toString().contains("/sys_user/login")){
+			invoke(c,invocation);
 		}else{
-			flag=permission==null?true:hasPermission(user,permission.value());
-			if(flag){
-				invoke(c,invocation);
+			if(user==null){
+				c.renderFreeMarker("/login.html");
 			}else{
-				c.renderFreeMarker("/common/noPermission.html");
+				flag=permission==null?true:hasPermission(user,permission.value());
+				if(flag){
+					invoke(c,invocation);
+				}else{
+					c.renderFreeMarker("/error/noPermission.html");
+				}
 			}
 		}
 	}
@@ -57,7 +57,6 @@ public class GlobalInterceptor implements Interceptor{
 		User user=null;
 		try {
 			invocation.invoke();
-			user=c.getSessionAttr("loginUser");
 		} catch (Exception e) {
 			e.printStackTrace();
 			/**
@@ -73,7 +72,8 @@ public class GlobalInterceptor implements Interceptor{
 			/**
 			 * 日志记录
 			 */
-			if(method.isAnnotationPresent(Logs.class)){
+			user=c.getSessionAttr("loginUser");
+			if(method.isAnnotationPresent(Logs.class)&&user!=null){
 				HttpServletRequest request= c.getRequest();
 				Logs logs = method.getAnnotation(Logs.class);
 				UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent")); 
