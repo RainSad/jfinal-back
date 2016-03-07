@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import cn.wawi.common.annotation.Logs;
 import cn.wawi.common.annotation.Permission;
@@ -25,54 +27,47 @@ import eu.bitwalker.useragentutils.UserAgent;
  */
 public class GlobalInterceptor implements Interceptor{
 	
+	int resCode=1;
+	String resMsg="请求成功!";
+	
 	/**
 	 * 日志记录及异常拦截及权限拦截
 	 */
+	@SuppressWarnings("all")
 	public void intercept(Invocation invocation){
 		boolean flag=false;
 		Controller c=invocation.getController();
 		Method method=invocation.getMethod();
 		Permission permission = method.getAnnotation(Permission.class);
 		User user=c.getSessionAttr("loginUser");
-		if(c.getRequest().getRequestURL().toString().contains("/sys_user/login")){
-			invoke(c,invocation);
-		}else{
+		try {
 			if(user==null){
-				c.renderFreeMarker("/login.html");
+			 	c.renderFreeMarker("/login.html");
 			}else{
 				flag=permission==null?true:hasPermission(user,permission.value());
 				if(flag){
-					invoke(c,invocation);
+					invocation.invoke();
 				}else{
 					c.renderFreeMarker("/error/noPermission.html");
 				}
 			}
-		}
-	}
-	@SuppressWarnings("all")
-	public void invoke(Controller c,Invocation invocation){
-		int resCode=1;
-		String resMsg="请求成功!";
-		Method method=invocation.getMethod();
-		User user=null;
-		try {
-			invocation.invoke();
 		} catch (Exception e) {
 			e.printStackTrace();
+			resCode=0;
+			resMsg="请求失败!";
 			/**
 			 * json异常处理
 			 */
 			if(c.getRender() instanceof com.jfinal.render.JsonRender){
-				Json json=new Json();
-				json.setResMsg("操作失败!");
-				json.setResCode(0);
-				c.render(new JsonRender(json).forIE());
+				Map<String,Object> map=new HashMap<String,Object>();
+				map.put("resMsg", resMsg);
+				map.put("resCode", resCode);
+				c.render(new JsonRender(map).forIE());
 			}
 		}finally{
 			/**
 			 * 日志记录
 			 */
-			user=c.getSessionAttr("loginUser");
 			if(method.isAnnotationPresent(Logs.class)&&user!=null){
 				HttpServletRequest request= c.getRequest();
 				Logs logs = method.getAnnotation(Logs.class);
@@ -96,6 +91,7 @@ public class GlobalInterceptor implements Interceptor{
 			}
 		}
 	}
+	
 	/**
 	 * 权限验证
 	 */

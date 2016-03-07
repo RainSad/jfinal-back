@@ -7,7 +7,6 @@ $(function(){
 		var selRows=$('#dg').datagrid('getSelections');
 		easyExt.del(selRows,'/sys_role/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
 			$('#dg').datagrid('reload'); 
-			$('#dg').datagrid('clearSelections');  
 		});
 	});
 	//添加实现

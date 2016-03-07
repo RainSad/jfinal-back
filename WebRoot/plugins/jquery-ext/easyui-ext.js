@@ -86,10 +86,11 @@ easyExt.del=function(selRows,url,callback){
             }  
             easyExt.ajax({url:easyExt.url+url,type:'GET',data:{ids:ids}},function(data,status, xhr){
             	if(data.resCode=='1'||data.resCode==1){
-       			 if(typeof callback == "function") 
-   				  callback();
-            	}else{
-            		
+     			   if(callback && typeof(callback) === "function"){
+    				   window.setTimeout(function(){ 
+    			         callback();
+    		           },0); 
+    			   }
             	}
             });
         });
@@ -165,8 +166,11 @@ easyExt.form=function($url,callback){
 			if(data.resCode=='1'||data.resCode==1){
 				$.messager.alert("提示", "操作成功！", "info"); 
 				$('#addDialog').dialog('close');
-				 if(typeof callback == "function") 
-					  callback();
+			   if(callback && typeof(callback) === "function"){
+				   window.setTimeout(function(){ 
+			         callback();
+		           },0); 
+			   }
 			}else{
 				$.messager.alert("提示", "操作失败！", "info"); 
 			}
@@ -189,8 +193,11 @@ easyExt.ajax=function(opt,callback){
     	timeout: 5000
     	}).done(function(data, status, xhr){
     		//$.messager.alert("提示", "请求成功！", "info");
-   			 if(typeof callback == "function") 
-   				callback(data,status, xhr);
+		   if(callback && typeof(callback) === "function"){
+			   window.setTimeout(function(){ 
+		         callback(data,status, xhr);
+	           },0); 
+		   }
     	}).fail(function(data, status, xhr){
     		$.messager.alert("提示", "请求失败！", "info");
     		return;
