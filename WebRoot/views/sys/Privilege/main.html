@@ -1,0 +1,54 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/Privilege.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'west',split:true,border:false,title:'菜单列表'"  style="width: 300px">
+<table id="tg" data-options="singleSelect: true,onBeforeLoad: function(row,param){
+  			 if(!row){
+				 param.type='F';
+			 }
+},onClickRow: function(row){$('#dg').datagrid('load',{parentId:row.id});}">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'name'" width="10%">名称</th>
+		</tr>
+	</thead>
+</table>
+  </div> 
+  <div data-options="region:'center',split:true,border:false,title:'权限列表'">
+<table id="dg" data-options="toolbar:'#toolbar', singleSelect: true,onBeforeLoad: function(row,param){
+  			 if(!row){
+				 param.type='O';
+			 }
+}">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" data-options="field:'name'">名称</th>
+			<th align="center" width="12%" data-options="field:'url'">访问路径</th>
+			<th align="center" width="12%" data-options="field:'permCode'">权限编码</th>
+			<th align="center" width="10%" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
+			<th align="center" width="10%" data-options="field:'sort'">排序</th>
+			<th align="center" width="10%" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+</div>
+<div id="toolbar" style="padding:5px;height:auto;">
+    <div style="display:inline;margin-left:5px;">
+      <a class="easyui-linkbutton" id="add" data-options="iconCls:'icon-add',plain:true">添加</a>
+	  <a class="easyui-linkbutton" id="del" data-options="iconCls:'icon-remove',plain:true">删除</a>
+	  <a class="easyui-linkbutton" id="edit" data-options="iconCls:'icon-edit',plain:true">修改</a>
+	  <a class="easyui-linkbutton" id="addPermission" data-options="iconCls:'icon-add',plain:true">添加基本权限(增删改查)</a>
+	</div>
+</div>
+
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
+<#include "addPermission.html"/>
+</div>
+
+</body>
+</html>

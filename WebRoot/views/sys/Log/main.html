@@ -1,0 +1,40 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/Log.js"></script>
+</head>
+<body class="easyui-layout">
+<table id="dg" title="日志列表" data-options="toolbar:'#toolbar'">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" width="8%" data-options="field:'ip'">ip地址</th>
+			<th align="center" width="8%" data-options="field:'os'">操作系统</th>
+			<th align="center" width="8%" data-options="field:'browser'">浏览器</th>
+			<th align="center" width="8%" data-options="field:'optUser'">用户名</th>
+			<th align="center" width="8%" data-options="field:'realname'">姓名</th>
+			<th align="center" width="12%" data-options="field:'inputTime'">操作时间</th>
+			<th align="center" width="5%" data-options="field:'isSuccess',formatter:function(value,row,index){if(value=='1'||value==1){return '成功!';}else{return '失败!'}}">是否成功</th>
+			<th align="center" data-options="field:'requestParam'" width="15%">请求参数</th>
+			<th align="center" width="10%" data-options="field:'operationCode'">请求地址</th>
+			<th align="center" width="12%" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+
+<div id="toolbar" style="padding:5px;height:auto;">
+    <div style="display:inline;margin-left:5px;">
+	 <a class="easyui-linkbutton" id="del" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="excel" data-options="iconCls:'icon-standard-page-excel',plain:true">导出excel</a>
+	</div>
+	<div style="margin-left:4px;">
+	  <form action="#" id="tForm" style="display:inline;">
+	     <span style="margin-left:5px;">时间: <input class="easyui-datebox" style="width:120px;" name="startTime"></input>-<input class="easyui-datebox" name="endTime" style="width:120px"></input></span>
+	     <span style="margin-left:5px;">综合搜索: <input class="easyui-textbox" style="width:120px;" name="name"></input></span>
+	     <a href="#" class="easyui-linkbutton" style="width:150px;margin-right:5px;float:right;" id="search" data-options="iconCls:'icon-search',plain:true">查询</a>
+      </form>
+   </div>
+</div>
+
+</body>
+</html>

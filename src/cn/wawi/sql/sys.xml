@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.wawi.common.Dao">
+	
+	<sql id="common">
+		<if test="startTime != null">AND inputTime >=str_to_date(#{startTime},'%Y-%m-%d %H:%i:%s')</if>
+		<if test="endTime != null">AND inputTime &lt;str_to_date(#{endTime},'%Y-%m-%d %H:%i:%s')</if>
+	</sql>
+
+	<!-- 查询用户 -->
+	<select id="findUser" parameterType="java.util.Map">
+		select * from sys_user 
+		 <where>
+		 	<if test="name != null">
+		 	 (realname like concat('%',#{name},'%') OR phone=#{name} OR username like concat('%',#{name},'%') OR email like concat('%',#{name},'%'))
+		 	</if>
+			<if test="status != null">AND status = #{status}</if>
+		    <include refid="common"/>
+		</where>
+	</select>
+	<!-- 查询日志 -->
+	<select id="findLog"  parameterType="java.util.Map">
+		select * from sys_log 
+		 <where>
+		    <if test="name != null">
+		     (optUser like concat('%',#{name},'%') OR realname like concat('%',#{name},'%') OR os like concat('%',#{name},'%') OR browser like concat('%',#{name},'%') OR isSuccess=#{name})
+		    </if>
+            <include refid="common"/>
+		</where>
+	</select>
+	<!-- 查询部门 -->
+	<select id="findDepartment"  parameterType="java.util.Map">
+		select * from sys_department  
+		 <where>
+		 	<if test="name != null">
+		 	( name like concat('%',#{name},'%') OR address like concat('%',#{name},'%') OR description like concat('%',#{name},'%'))
+		 	</if>
+			<if test="status != null">AND status = #{status}</if>
+			<if test="parentId != null">AND parentId=#{parentId}</if>
+		</where>
+	</select>
+	<!-- 查询字典 -->
+	<select id="findDict" parameterType="java.util.Map">
+		select * from sys_dict  <where>
+		    <if test="name != null">
+		     (value like concat('%',#{name},'%') OR label like concat('%',#{name},'%') OR type like concat('%',#{name},'%') OR description like concat('%',#{name},'%'))
+		    </if>
+			<if test="status != null">AND status = #{status}</if>
+		</where>
+	</select>
+	
+	
+   <!-- 查询菜单/权限 -->
+	<select id="findPrivilege" parameterType="java.util.Map">
+		select * from sys_privilege 		<where>
+			<if test="status != null">status = #{status}</if>
+			<if test="id != null">AND id = #{id}</if>
+			<if test="parentId != null">AND parentId = #{parentId}</if>
+			<if test="name != null">AND name like concat('%',#{name},'%')</if>
+			<if test="type!=null">and type=#{type}</if>
+		</where>
+	</select>
+    <!-- 查询角色-->
+	<select id="findRole"  parameterType="java.util.Map">
+		select * from sys_role 	<where>
+			<if test="status != null">status = #{status}</if>
+			<if test="name != null">AND name  like concat('%',#{name},'%')</if>
+		</where>
+	</select>
+</mapper>

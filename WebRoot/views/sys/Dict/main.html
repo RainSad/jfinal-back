@@ -1,0 +1,39 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/Dict.js"></script>
+</head>
+<body class="easyui-layout">
+<table id="dg" title="字典列表" data-options="toolbar:'#toolbar'">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" data-options="field:'label'" width="10%">标签</th>
+			<th align="center" data-options="field:'value'" width="10%">值</th>
+			<th align="center" data-options="field:'type'" width="10%">类型</th>
+			<th align="center" width="10%" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
+			<th align="center" width="10%" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+
+<div id="toolbar" style="padding:5px;height:auto;">
+    <div id="toolbar" style="display:inline;margin-left:5px;">
+     <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
+	</div>
+	<div style="margin-left:4px;">
+	  <form action="#" id="tForm" style="display:inline;">
+         <span style="margin-left:5px;"> 状态: <select class="easyui-combobox" style="width:100px;" name="status"><option value="1">开启</option><option value="0">关闭</option></select></span>
+	     <span style="margin-left:5px;">综合搜索: <input class="easyui-textbox" style="width:120px;" name="name"></input></span>
+	     <a href="#" class="easyui-linkbutton" style="width:150px;margin-right:5px;float:right;" id="search" iconCls="icon-search">查询</a>
+      </form>
+   </div>
+</div>
+
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:450px;height:280px;">
+<#include "add.html"/>
+</div>
+</body>
+</html>

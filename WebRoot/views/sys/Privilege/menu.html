@@ -1,0 +1,35 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/sys/menu.js"></script>
+</head>
+<body class="easyui-layout">
+<table id="tg" title="菜单列表" data-options="toolbar:'#toolbar',singleSelect: false,onBeforeLoad:function(row,param){
+       		if(!row){
+				 param.type='F';
+			}
+}">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'name'" width="100">名称</th>
+			<th align="center" width="100" data-options="field:'url'">资源路径</th>
+			<th align="center" width="100" data-options="field:'status',formatter:function(value,row,index){if(value=='1'||value==1){return '开启状态';}else{return '关闭状态'}}" >状态</th>
+			<th align="center" width="100" data-options="field:'sort'">排序</th>
+			<th align="center" width="100" data-options="field:'description'">描述</th>
+		</tr>
+	</thead>
+</table>
+
+<div id="toolbar" style="padding:5px;height:auto;">
+    <div id="toolbar" style="display:inline;margin-left:5px;">
+     <a class="easyui-linkbutton" id="add" iconCls="icon-add" plain="true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del" iconCls="icon-remove" plain="true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit" iconCls="icon-edit" plain="true">修改</a>
+	</div>
+</div>
+
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:420px;height:330px;">
+<#include "addMenu.html"/>
+</div>
+</body>
+</html>
