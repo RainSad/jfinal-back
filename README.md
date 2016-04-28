@@ -2,7 +2,7 @@ jfinal是由jfinal2.2+freemarker+easyui写的一个后台管理系统，参考�
 在线访问：http://pzl.hbwwcc.com/weixin  
 
 
-帐号：guest密码：guest
+帐号：guest密码：guest  尽量不要做些修改的操作。
 
 系统截图
 
