@@ -1,0 +1,39 @@
+<form id="addForm" method="post" enctype="multipart/form-data">
+	<table class="formTable">
+		<tr>
+			<td>名称：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="coachName" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>类型：</td>
+		    <td><select class="easyui-combobox" name="type" style="width:150px;"><option value="0">教练</option><option value="1">陪练</option></select></td>
+		</tr>
+		<tr>
+			<td>联系电话：</td>
+			<td>
+				<input name="contact" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>头像：</td>
+			<td>
+				<input name="file" type="file" class="easyui-filebox" data-options="prompt:'请上传头像...',width: 150" /> 
+			</td>
+		</tr>
+		<tr>
+			<td>教练简介：</td>
+			<td>
+				<input name="brief" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+		<td>教练详情:</td>
+			<td>
+		       <textarea name="content" style="width:250px;height:100px;"></textarea> 
+			</td>
+		</tr>
+	</table>
+</form>

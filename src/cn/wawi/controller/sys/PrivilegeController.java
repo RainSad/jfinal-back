@@ -45,6 +45,7 @@ public class PrivilegeController extends BaseController<Privilege>{
 		Privilege privilege=new Privilege();
 		privilege.setStatus(getPara("status"));
 		privilege.setName(getPara("name"));
+		privilege.setType(getPara("type"));
 		privilege.setId(StringUtil.parseInteger(getPara("id")));
 		privilege.setParentId(StringUtil.parseInteger(getPara("parentId")));
     	condi.setFiledQuery(Conditions.FUZZY, "name");

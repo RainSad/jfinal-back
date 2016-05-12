@@ -1,0 +1,42 @@
+<#include "/common/_layout.html"/>
+<@layout/>
+<script type="text/javascript" src="${ctx}/static/js/data/Coach.js"></script>
+</head>
+<body class="easyui-layout">
+<table id="dg" title="教练列表" data-options="toolbar:'#toolbar'">
+	<thead>
+		<tr>
+			<th data-options="field:'id',hidden:true">id</th>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th align="center" width="8%" data-options="field:'coachName'">教练名称</th>
+			<th align="center" width="8%" data-options="field:'brief'">简介</th>
+			<th align="center" width="8%" data-options="field:'content'">详情</th>
+			<th align="center" width="8%" data-options="field:'type',formatter:function(value,row,index){if(value=='0'||value==0){return '教练';}else{return '陪练'}}" >类型</th>
+			<th align="center" width="8%" data-options="field:'imgUrl'">头像地址</th>
+			<th align="center" width="12%" data-options="field:'inputTime'">时间</th>
+			<th align="center" data-options="field:'contact'" width="15%">联系电话</th>
+		</tr>
+	</thead>
+</table>
+
+<div id="toolbar" style="padding:5px;height:auto;">
+    <div style="display:inline;margin-left:5px;">
+	  <a class="easyui-linkbutton"  id="add" data-options="iconCls:'icon-add',plain:true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	  <a class="easyui-linkbutton" id="del" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	  <a class="easyui-linkbutton" id="edit" data-options="iconCls:'icon-edit',plain:true">修改</a><span class="toolbar-item dialog-tool-separator"></span>
+	</div>
+	<div style="margin-left:4px;">
+	  <form action="#" id="tForm" style="display:inline;">
+	     <span style="margin-left:5px;">时间: <input class="easyui-datebox" style="width:120px;" name="startTime"></input>-<input class="easyui-datebox" name="endTime" style="width:120px"></input></span>
+	     <span style="margin-left:5px;">综合搜索: <input class="easyui-textbox" style="width:120px;" name="name"></input></span>
+	     <a href="#" class="easyui-linkbutton" style="width:150px;margin-right:5px;float:right;" id="search" data-options="iconCls:'icon-search'">查询</a>
+      </form>
+   </div>
+</div>
+
+<div id="addDialog" class="easyui-dialog" data-options="closed:true,modal:true,maximizable:true" style="width:480px;height:360px;">
+<#include "add.html"/>
+</div>
+
+</body>
+</html>

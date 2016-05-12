@@ -1,0 +1,27 @@
+<form id="addForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td>社区店名称：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="residenceName" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>联系人：</td>
+			<td>
+				<input name="chiefName" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>联系电话：</td>
+			<td>
+				<input name="chiefTel" type="text" class="easyui-textbox" data-options="width: 150"/> 
+			</td>
+		</tr>
+		<tr>
+			<td>所属小区：</td>
+			<td><select class="easyui-combobox" name="communityId" id="community" data-options="valueField:'id',textField:'communityName',url:easyExt.url+'/data_community/getCombo',width: 150" ></select></td>
+		</tr>
+	</table>
+</form>

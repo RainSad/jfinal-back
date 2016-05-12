@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2016-03-07 15:45:38
+Date: 2016-05-12 10:34:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,15 +63,16 @@ CREATE TABLE `sys_dict` (
   `remark` varchar(255) DEFAULT NULL,
   `status` varchar(2) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
 INSERT INTO `sys_dict` VALUES ('1', '正常', '0', 'user', '用户状态', '1', null, '1');
+INSERT INTO `sys_dict` VALUES ('2', '禁用', '1', 'user', '用户状态', '2', null, '1');
+INSERT INTO `sys_dict` VALUES ('4', '普通用户', '0', 'user', '用户类型', '3', null, '1');
 INSERT INTO `sys_dict` VALUES ('5', '会员用户', '1', 'user', '用户类型', '4', null, '1');
 INSERT INTO `sys_dict` VALUES ('6', '钻石用户', '1', 'user', '用户类型', '5', null, '0');
-INSERT INTO `sys_dict` VALUES ('7', '不正常', '2', 'user', '访问法违反', '1', null, '1');
 
 -- ----------------------------
 -- Table structure for sys_dictitem
@@ -86,43 +87,47 @@ CREATE TABLE `sys_dictitem` (
   `order` int(16) NOT NULL,
   `enName` varchar(100) NOT NULL,
   `shortName` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `sys_dictitem_ibfk_1` (`parentId`),
+  KEY `id` (`id`),
+  CONSTRAINT `sys_dictitem_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `sys_dictitem` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_dictitem
 -- ----------------------------
-INSERT INTO `sys_dictitem` VALUES ('2', '110000', '北京市', '0', '1', '0', 'Beijing Shi', 'BJ');
-INSERT INTO `sys_dictitem` VALUES ('3', '120000', '天津市', '0', '1', '0', 'Tianjin Shi', 'TJ');
-INSERT INTO `sys_dictitem` VALUES ('4', '130000', '河北省', '0', '1', '0', 'Hebei Sheng', 'HE');
-INSERT INTO `sys_dictitem` VALUES ('5', '140000', '山西省', '0', '1', '0', 'Shanxi Sheng ', 'SX');
-INSERT INTO `sys_dictitem` VALUES ('6', '150000', '内蒙古自治区', '0', '1', '0', 'Nei Mongol Zizhiqu', 'NM');
-INSERT INTO `sys_dictitem` VALUES ('7', '210000', '辽宁省', '0', '1', '0', 'Liaoning Sheng', 'LN');
-INSERT INTO `sys_dictitem` VALUES ('8', '220000', '吉林省', '0', '1', '0', 'Jilin Sheng', 'JL');
-INSERT INTO `sys_dictitem` VALUES ('9', '230000', '黑龙江省', '0', '1', '0', 'Heilongjiang Sheng', 'HL');
-INSERT INTO `sys_dictitem` VALUES ('10', '310000', '上海市', '0', '1', '0', 'Shanghai Shi', 'SH');
-INSERT INTO `sys_dictitem` VALUES ('11', '320000', '江苏省', '0', '1', '0', 'Jiangsu Sheng', 'JS');
-INSERT INTO `sys_dictitem` VALUES ('12', '330000', '浙江省', '0', '1', '0', 'Zhejiang Sheng', 'ZJ');
-INSERT INTO `sys_dictitem` VALUES ('13', '340000', '安徽省', '0', '1', '0', 'Anhui Sheng', 'AH');
-INSERT INTO `sys_dictitem` VALUES ('14', '350000', '福建省', '0', '1', '0', 'Fujian Sheng ', 'FJ');
-INSERT INTO `sys_dictitem` VALUES ('15', '360000', '江西省', '0', '1', '0', 'Jiangxi Sheng', 'JX');
-INSERT INTO `sys_dictitem` VALUES ('16', '370000', '山东省', '0', '1', '0', 'Shandong Sheng ', 'SD');
-INSERT INTO `sys_dictitem` VALUES ('17', '410000', '河南省', '0', '1', '0', 'Henan Sheng', 'HA');
-INSERT INTO `sys_dictitem` VALUES ('18', '420000', '湖北省', '0', '1', '0', 'Hubei Sheng', 'HB');
-INSERT INTO `sys_dictitem` VALUES ('19', '430000', '湖南省', '0', '1', '0', 'Hunan Sheng', 'HN');
-INSERT INTO `sys_dictitem` VALUES ('20', '440000', '广东省', '0', '1', '0', 'Guangdong Sheng', 'GD');
-INSERT INTO `sys_dictitem` VALUES ('21', '450000', '广西壮族自治区', '0', '1', '0', 'Guangxi Zhuangzu Zizhiqu', 'GX');
-INSERT INTO `sys_dictitem` VALUES ('22', '460000', '海南省', '0', '1', '0', 'Hainan Sheng', 'HI');
-INSERT INTO `sys_dictitem` VALUES ('23', '500000', '重庆市', '0', '1', '0', 'Chongqing Shi', 'CQ');
-INSERT INTO `sys_dictitem` VALUES ('24', '510000', '四川省', '0', '1', '0', 'Sichuan Sheng', 'SC');
-INSERT INTO `sys_dictitem` VALUES ('25', '520000', '贵州省', '0', '1', '0', 'Guizhou Sheng', 'GZ');
-INSERT INTO `sys_dictitem` VALUES ('26', '530000', '云南省', '0', '1', '0', 'Yunnan Sheng', 'YN');
-INSERT INTO `sys_dictitem` VALUES ('27', '540000', '西藏自治区', '0', '1', '0', 'Xizang Zizhiqu', 'XZ');
-INSERT INTO `sys_dictitem` VALUES ('28', '610000', '陕西省', '0', '1', '0', 'Shanxi Sheng ', 'SN');
-INSERT INTO `sys_dictitem` VALUES ('29', '620000', '甘肃省', '0', '1', '0', 'Gansu Sheng', 'GS');
-INSERT INTO `sys_dictitem` VALUES ('30', '630000', '青海省', '0', '1', '0', 'Qinghai Sheng', 'QH');
-INSERT INTO `sys_dictitem` VALUES ('31', '640000', '宁夏回族自治区', '0', '1', '0', 'Ningxia Huizu Zizhiqu', 'NX');
-INSERT INTO `sys_dictitem` VALUES ('32', '650000', '新疆维吾尔自治区', '0', '1', '0', 'Xinjiang Uygur Zizhiqu', 'XJ');
+INSERT INTO `sys_dictitem` VALUES ('0', '中国', '中国', null, '2', '99', 'zg', 'zg');
+INSERT INTO `sys_dictitem` VALUES ('2', '110000', '北京市', null, '1', '0', 'Beijing Shi', 'BJ');
+INSERT INTO `sys_dictitem` VALUES ('3', '120000', '天津市', null, '1', '0', 'Tianjin Shi', 'TJ');
+INSERT INTO `sys_dictitem` VALUES ('4', '130000', '河北省', null, '1', '0', 'Hebei Sheng', 'HE');
+INSERT INTO `sys_dictitem` VALUES ('5', '140000', '山西省', null, '1', '0', 'Shanxi Sheng ', 'SX');
+INSERT INTO `sys_dictitem` VALUES ('6', '150000', '内蒙古自治区', null, '1', '0', 'Nei Mongol Zizhiqu', 'NM');
+INSERT INTO `sys_dictitem` VALUES ('7', '210000', '辽宁省', null, '1', '0', 'Liaoning Sheng', 'LN');
+INSERT INTO `sys_dictitem` VALUES ('8', '220000', '吉林省', null, '1', '0', 'Jilin Sheng', 'JL');
+INSERT INTO `sys_dictitem` VALUES ('9', '230000', '黑龙江省', null, '1', '0', 'Heilongjiang Sheng', 'HL');
+INSERT INTO `sys_dictitem` VALUES ('10', '310000', '上海市', null, '1', '0', 'Shanghai Shi', 'SH');
+INSERT INTO `sys_dictitem` VALUES ('11', '320000', '江苏省', null, '1', '0', 'Jiangsu Sheng', 'JS');
+INSERT INTO `sys_dictitem` VALUES ('12', '330000', '浙江省', null, '1', '0', 'Zhejiang Sheng', 'ZJ');
+INSERT INTO `sys_dictitem` VALUES ('13', '340000', '安徽省', null, '1', '0', 'Anhui Sheng', 'AH');
+INSERT INTO `sys_dictitem` VALUES ('14', '350000', '福建省', null, '1', '0', 'Fujian Sheng ', 'FJ');
+INSERT INTO `sys_dictitem` VALUES ('15', '360000', '江西省', null, '1', '0', 'Jiangxi Sheng', 'JX');
+INSERT INTO `sys_dictitem` VALUES ('16', '370000', '山东省', null, '1', '0', 'Shandong Sheng ', 'SD');
+INSERT INTO `sys_dictitem` VALUES ('17', '410000', '河南省', null, '1', '0', 'Henan Sheng', 'HA');
+INSERT INTO `sys_dictitem` VALUES ('18', '420000', '湖北省', null, '1', '0', 'Hubei Sheng', 'HB');
+INSERT INTO `sys_dictitem` VALUES ('19', '430000', '湖南省', null, '1', '0', 'Hunan Sheng', 'HN');
+INSERT INTO `sys_dictitem` VALUES ('20', '440000', '广东省', null, '1', '0', 'Guangdong Sheng', 'GD');
+INSERT INTO `sys_dictitem` VALUES ('21', '450000', '广西壮族自治区', null, '1', '0', 'Guangxi Zhuangzu Zizhiqu', 'GX');
+INSERT INTO `sys_dictitem` VALUES ('22', '460000', '海南省', null, '1', '0', 'Hainan Sheng', 'HI');
+INSERT INTO `sys_dictitem` VALUES ('23', '500000', '重庆市', null, '1', '0', 'Chongqing Shi', 'CQ');
+INSERT INTO `sys_dictitem` VALUES ('24', '510000', '四川省', null, '1', '0', 'Sichuan Sheng', 'SC');
+INSERT INTO `sys_dictitem` VALUES ('25', '520000', '贵州省', null, '1', '0', 'Guizhou Sheng', 'GZ');
+INSERT INTO `sys_dictitem` VALUES ('26', '530000', '云南省', null, '1', '0', 'Yunnan Sheng', 'YN');
+INSERT INTO `sys_dictitem` VALUES ('27', '540000', '西藏自治区', null, '1', '0', 'Xizang Zizhiqu', 'XZ');
+INSERT INTO `sys_dictitem` VALUES ('28', '610000', '陕西省', null, '1', '0', 'Shanxi Sheng ', 'SN');
+INSERT INTO `sys_dictitem` VALUES ('29', '620000', '甘肃省', null, '1', '0', 'Gansu Sheng', 'GS');
+INSERT INTO `sys_dictitem` VALUES ('30', '630000', '青海省', null, '1', '0', 'Qinghai Sheng', 'QH');
+INSERT INTO `sys_dictitem` VALUES ('31', '640000', '宁夏回族自治区', null, '1', '0', 'Ningxia Huizu Zizhiqu', 'NX');
+INSERT INTO `sys_dictitem` VALUES ('32', '650000', '新疆维吾尔自治区', null, '1', '0', 'Xinjiang Uygur Zizhiqu', 'XJ');
 INSERT INTO `sys_dictitem` VALUES ('33', '110100', '市辖区', '2', '0', '0', 'Shixiaqu', '2');
 INSERT INTO `sys_dictitem` VALUES ('34', '110200', '县', '2', '0', '0', 'Xian', '2');
 INSERT INTO `sys_dictitem` VALUES ('35', '120100', '市辖区', '3', '0', '0', 'Shixiaqu', '2');
@@ -2709,10 +2714,10 @@ INSERT INTO `sys_dictitem` VALUES ('2627', '500240', '石柱土家族自治县',
 INSERT INTO `sys_dictitem` VALUES ('2628', '500241', '秀山土家族苗族自治县', '271', '0', '0', 'Xiushan Tujiazu Miaozu Zizhixian', 'XUS');
 INSERT INTO `sys_dictitem` VALUES ('2629', '500242', '酉阳土家族苗族自治县', '271', '0', '0', 'Youyang Tujiazu Miaozu Zizhixian', 'YUY');
 INSERT INTO `sys_dictitem` VALUES ('2630', '500243', '彭水苗族土家族自治县', '271', '0', '0', 'Pengshui Miaozu Tujiazu Zizhixian', 'PSU');
-INSERT INTO `sys_dictitem` VALUES ('2631', '500116', '江津区', '272', '0', '0', 'Jiangjin Shi', '2');
-INSERT INTO `sys_dictitem` VALUES ('2632', '500117', '合川区', '272', '0', '0', 'Hechuan Shi', '2');
-INSERT INTO `sys_dictitem` VALUES ('2633', '500118', '永川区', '272', '0', '0', 'Yongchuan Shi', '2');
-INSERT INTO `sys_dictitem` VALUES ('2634', '500119', '南川区', '272', '0', '0', 'Nanchuan Shi', '2');
+INSERT INTO `sys_dictitem` VALUES ('2631', '500116', '江津区', '270', '0', '0', 'Jiangjin Shi', '2');
+INSERT INTO `sys_dictitem` VALUES ('2632', '500117', '合川区', '270', '0', '0', 'Hechuan Shi', '2');
+INSERT INTO `sys_dictitem` VALUES ('2633', '500118', '永川区', '270', '0', '0', 'Yongchuan Shi', '2');
+INSERT INTO `sys_dictitem` VALUES ('2634', '500119', '南川区', '270', '0', '0', 'Nanchuan Shi', '2');
 INSERT INTO `sys_dictitem` VALUES ('2635', '510101', '市辖区', '273', '0', '0', 'Shixiaqu', '2');
 INSERT INTO `sys_dictitem` VALUES ('2636', '510104', '锦江区', '273', '0', '0', 'Jinjiang Qu', 'JJQ');
 INSERT INTO `sys_dictitem` VALUES ('2637', '510105', '青羊区', '273', '0', '0', 'Qingyang Qu', 'QYQ');
@@ -3633,18 +3638,18 @@ CREATE TABLE `sys_log` (
   `requestParam` varchar(255) DEFAULT NULL,
   `operationCode` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('26', 'admin', 'admin', '2016-03-03 11:51:23', '用户登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"26yme\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('28', 'admin', 'admin', '2016-03-03 11:55:12', '用户登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"b4a8e\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('30', 'admin', 'admin', '2016-03-03 12:31:41', '用户登录', '1', '127.0.0.1', 'Windows 7', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"6724a\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('168', 'admin', 'admin', '2016-03-07 15:04:30', '用户登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"mnpw8\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('169', 'admin', 'admin', '2016-03-07 15:05:33', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"6ymcy\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('170', 'admin', 'admin', '2016-03-07 15:20:27', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"fx8a8\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
-INSERT INTO `sys_log` VALUES ('171', 'admin', 'admin', '2016-03-07 15:20:44', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"eaydp\"],\"password\":[\"******\"]}', '/jfinal/sys_user/login');
+INSERT INTO `sys_log` VALUES ('2', 'admin', 'admin', '2015-09-18 22:32:12', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"7p8p4\"],\"password\":[\"******\"]}', '/sys_user/login');
+INSERT INTO `sys_log` VALUES ('3', 'admin', 'admin', '2015-09-18 11:23:35', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"7p8p4\"],\"password\":[\"******\"]}', '/sys_user/login');
+INSERT INTO `sys_log` VALUES ('4', 'admin', 'admin', '2015-09-18 12:34:56', '用户登录', '1', '127.0.0.1', 'Windows Vista', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"7p8p4\"],\"password\":[\"******\"]}', '/sys_user/login');
+INSERT INTO `sys_log` VALUES ('10', 'admin', 'admin', '2015-10-09 00:00:00', '用户登录', '1', '192.168.2.100', 'Android', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"6pnda\"],\"password\":[\"******\"]}', '/sys_user/login');
+INSERT INTO `sys_log` VALUES ('11', 'admin', 'admin', '2016-04-25 11:03:49', '用户登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"afaf4\"],\"password\":[\"******\"]}', '/weixin/sys_user/login');
+INSERT INTO `sys_log` VALUES ('12', 'admin', 'admin', '2016-04-25 15:29:50', '用户登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{\"username\":[\"admin\"],\"captcha\":[\"pdn3d\"],\"password\":[\"******\"]}', '/weixin/sys_user/login');
+INSERT INTO `sys_log` VALUES ('13', 'admin', 'admin', '2016-04-25 15:31:28', '退出登录', '1', '127.0.0.1', 'Windows', 'Chrome', '{}', '/weixin/sys_user/exit');
 
 -- ----------------------------
 -- Table structure for sys_privilege
@@ -3664,7 +3669,7 @@ CREATE TABLE `sys_privilege` (
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`),
   CONSTRAINT `sys_privilege_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `sys_privilege` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -3688,6 +3693,7 @@ INSERT INTO `sys_privilege` VALUES ('16', 'icon-hamburg-old-versions', '菜单�
 INSERT INTO `sys_privilege` VALUES ('17', 'icon-hamburg-login', '权限管理', '/sys_privilege/main', null, '1', '1', null, '3', 'F');
 INSERT INTO `sys_privilege` VALUES ('18', 'icon-hamburg-address', '字典管理', '/sys_dict/main', '', '1', '1', null, '4', 'F');
 INSERT INTO `sys_privilege` VALUES ('19', 'icon-hamburg-world', '区域信息', '/sys_dictitem/main', null, '1', '1', null, '3', 'F');
+INSERT INTO `sys_privilege` VALUES ('20', 'icon-cologne-home', '机构管理', '/sys_department/main', null, '1', '1', null, '4', 'F');
 INSERT INTO `sys_privilege` VALUES ('21', null, '日志查看', '', '查看日志', '3', '1', 'sys:log:view', '8', 'O');
 INSERT INTO `sys_privilege` VALUES ('22', null, '添加菜单', '', '添加菜单', '16', '1', 'sys:privilege:menu:add', '9', 'O');
 INSERT INTO `sys_privilege` VALUES ('23', null, '删除菜单', '', '删除菜单', '16', '1', 'sys:privilege:menu:delete', '9', 'O');
@@ -3703,55 +3709,15 @@ INSERT INTO `sys_privilege` VALUES ('32', null, '字典修改', '', '字典修�
 INSERT INTO `sys_privilege` VALUES ('33', null, '字典查看', '', '字典查看', '18', '1', 'sys:dict:view', '9', 'O');
 INSERT INTO `sys_privilege` VALUES ('34', null, '查看用户角色', '', '查看用户角色', '4', '1', 'sys:user:roleView', '11', 'O');
 INSERT INTO `sys_privilege` VALUES ('35', null, '修改用户角色', '', '保存修改用户角色', '4', '1', 'sys:user:roleUpdate', '11', 'O');
-INSERT INTO `sys_privilege` VALUES ('38', 'icon-hamburg-config', '数据管理', '', '客户端数据管理', null, '1', null, '1', 'F');
-INSERT INTO `sys_privilege` VALUES ('39', 'icon-hamburg-customers', '岗位管理', '/data_post/main', '岗位管理', '38', '1', null, '2', 'F');
-INSERT INTO `sys_privilege` VALUES ('40', null, '岗位添加', '', '岗位添加', '39', '1', 'data:post:add', '5', 'O');
-INSERT INTO `sys_privilege` VALUES ('41', null, '岗位删除', '', '岗位删除', '39', '1', 'data:post:delete', '8', 'O');
-INSERT INTO `sys_privilege` VALUES ('42', 'icon-cologne-customers', '运营管理', '', null, null, '1', null, '1', 'F');
-INSERT INTO `sys_privilege` VALUES ('44', null, '数据查看', '', '岗位查看', '39', '1', 'data:post::view', '8', 'O');
-INSERT INTO `sys_privilege` VALUES ('46', null, '岗位修改', '', '岗位修改', '39', '1', 'data:post::update', '9', 'O');
 INSERT INTO `sys_privilege` VALUES ('55', null, '保存权限', '', '保存权限', '9', '1', 'sys:role:savePrivilege', '99', 'O');
+INSERT INTO `sys_privilege` VALUES ('56', null, '机构添加', '', '部门添加', '20', '1', 'sys:dept:add', '99', 'O');
+INSERT INTO `sys_privilege` VALUES ('57', null, '机构删除', '', '部门删除', '20', '1', 'sys:dept:delete', '99', 'O');
+INSERT INTO `sys_privilege` VALUES ('58', null, '机构修改', '', '部门修改', '20', '1', 'sys:dept:update', '99', 'O');
+INSERT INTO `sys_privilege` VALUES ('59', null, '机构查看', '', '部门查看', '20', '1', 'sys:dept:view', '99', 'O');
 INSERT INTO `sys_privilege` VALUES ('60', null, '区域添加', '', '区域添加', '19', '1', 'sys:dictitem:add', '99', 'O');
 INSERT INTO `sys_privilege` VALUES ('61', null, '区域删除', '', '区域删除', '19', '1', 'sys:dictitem:delete', '99', 'O');
 INSERT INTO `sys_privilege` VALUES ('62', null, '区域修改', '', '区域修改', '19', '1', 'sys:dictitem:update', '99', 'O');
 INSERT INTO `sys_privilege` VALUES ('63', null, '区域查看', '', '区域查看', '19', '1', 'sys:dictitem:view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('64', 'icon-hamburg-left', '活动推送', null, '活动推送', '42', '1', null, '99', 'F');
-INSERT INTO `sys_privilege` VALUES ('65', null, '添加 ', '', '拥有添加权限', '64', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('66', null, '删除 ', '', '拥有删除权限', '64', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('67', null, '修改 ', '', '拥有修改权限', '64', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('68', null, '查看 ', '', '拥有查看权限', '64', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('69', null, '添加 ', '', '拥有添加权限', '9', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('70', null, '删除 ', '', '拥有删除权限', '9', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('71', null, '修改 ', '', '拥有修改权限', '9', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('72', null, '查看 ', '', '拥有查看权限', '9', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('73', null, '添加 ', '', '拥有添加权限', '4', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('74', null, '删除 ', '', '拥有删除权限', '4', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('75', null, '修改 ', '', '拥有修改权限', '4', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('76', null, '查看 ', '', '拥有查看权限', '4', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('77', null, '添加 ', '', '拥有添加权限', '4', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('78', null, '删除 ', '', '拥有删除权限', '4', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('79', null, '修改 ', '', '拥有修改权限', '4', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('80', null, '查看 ', '', '拥有查看权限', '4', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('81', null, '添加 ', '', '拥有添加权限', '17', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('82', null, '删除 ', '', '拥有删除权限', '17', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('83', null, '修改 ', '', '拥有修改权限', '17', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('84', null, '查看 ', '', '拥有查看权限', '17', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('85', null, '添加 ', '', '拥有添加权限', '1', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('86', null, '删除 ', '', '拥有删除权限', '1', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('87', null, '修改 ', '', '拥有修改权限', '1', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('88', null, '查看 ', '', '拥有查看权限', '1', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('89', null, '添加 ', '', '拥有添加权限', '64', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('90', null, '删除 ', '', '拥有删除权限', '64', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('91', null, '修改 ', '', '拥有修改权限', '64', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('92', null, '查看 ', '', '拥有查看权限', '64', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('93', null, '添加 ', '', '拥有添加权限', '64', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('94', null, '删除 ', '', '拥有删除权限', '64', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('95', null, '修改 ', '', '拥有修改权限', '64', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('96', null, '查看 ', '', '拥有查看权限', '64', '1', 'view', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('97', null, '添加 ', '', '拥有添加权限', '64', '1', 'add', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('98', null, '删除 ', '', '拥有删除权限', '64', '1', 'delete', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('99', null, '修改 ', '', '拥有修改权限', '64', '1', 'update', '99', 'O');
-INSERT INTO `sys_privilege` VALUES ('100', null, '查看 ', '', '拥有查看权限', '64', '1', 'view', '99', 'O');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -3764,19 +3730,13 @@ CREATE TABLE `sys_role` (
   `description` varchar(255) DEFAULT NULL,
   `status` varchar(2) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', 'admin', '管理员', '1');
 INSERT INTO `sys_role` VALUES ('2', 'test', 'test', '测试员', '1');
-INSERT INTO `sys_role` VALUES ('3', 'superadmin', 'superadmin', '超级管理员', '1');
-INSERT INTO `sys_role` VALUES ('4', 'operate', 'operate', '运营', '1');
-INSERT INTO `sys_role` VALUES ('5', 'superadmin', 'superadmin', '超级管理员', '1');
-INSERT INTO `sys_role` VALUES ('6', 'admin1', 'admin', '一般管理员1', '1');
-INSERT INTO `sys_role` VALUES ('7', '运营管理', '运营管理', '负责网站运营', '1');
-INSERT INTO `sys_role` VALUES ('8', '123', '123', 'cs', '1');
 
 -- ----------------------------
 -- Table structure for sys_role_privilege
@@ -3791,123 +3751,60 @@ CREATE TABLE `sys_role_privilege` (
   KEY `sys_role_privilege_ibfk_2` (`privilegeId`),
   CONSTRAINT `sys_role_privilege_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `sys_role` (`id`) ON DELETE CASCADE,
   CONSTRAINT `sys_role_privilege_ibfk_2` FOREIGN KEY (`privilegeId`) REFERENCES `sys_privilege` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=291 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
 -- ----------------------------
-INSERT INTO `sys_role_privilege` VALUES ('78', '3', '6');
-INSERT INTO `sys_role_privilege` VALUES ('79', '3', '8');
-INSERT INTO `sys_role_privilege` VALUES ('110', '1', '9');
-INSERT INTO `sys_role_privilege` VALUES ('111', '1', '16');
-INSERT INTO `sys_role_privilege` VALUES ('112', '1', '17');
-INSERT INTO `sys_role_privilege` VALUES ('113', '1', '18');
-INSERT INTO `sys_role_privilege` VALUES ('114', '1', '19');
-INSERT INTO `sys_role_privilege` VALUES ('115', '1', '1');
-INSERT INTO `sys_role_privilege` VALUES ('116', '1', '4');
-INSERT INTO `sys_role_privilege` VALUES ('117', '1', '5');
-INSERT INTO `sys_role_privilege` VALUES ('118', '1', '6');
-INSERT INTO `sys_role_privilege` VALUES ('119', '1', '7');
-INSERT INTO `sys_role_privilege` VALUES ('120', '1', '8');
-INSERT INTO `sys_role_privilege` VALUES ('121', '1', '34');
-INSERT INTO `sys_role_privilege` VALUES ('122', '1', '35');
-INSERT INTO `sys_role_privilege` VALUES ('123', '1', '10');
-INSERT INTO `sys_role_privilege` VALUES ('124', '1', '11');
-INSERT INTO `sys_role_privilege` VALUES ('125', '1', '12');
-INSERT INTO `sys_role_privilege` VALUES ('126', '1', '13');
-INSERT INTO `sys_role_privilege` VALUES ('127', '1', '55');
-INSERT INTO `sys_role_privilege` VALUES ('128', '1', '22');
-INSERT INTO `sys_role_privilege` VALUES ('129', '1', '23');
-INSERT INTO `sys_role_privilege` VALUES ('130', '1', '24');
-INSERT INTO `sys_role_privilege` VALUES ('131', '1', '25');
-INSERT INTO `sys_role_privilege` VALUES ('132', '1', '26');
-INSERT INTO `sys_role_privilege` VALUES ('133', '1', '27');
-INSERT INTO `sys_role_privilege` VALUES ('134', '1', '28');
-INSERT INTO `sys_role_privilege` VALUES ('135', '1', '29');
-INSERT INTO `sys_role_privilege` VALUES ('136', '1', '30');
-INSERT INTO `sys_role_privilege` VALUES ('137', '1', '31');
-INSERT INTO `sys_role_privilege` VALUES ('138', '1', '32');
-INSERT INTO `sys_role_privilege` VALUES ('139', '1', '33');
-INSERT INTO `sys_role_privilege` VALUES ('140', '1', '60');
-INSERT INTO `sys_role_privilege` VALUES ('141', '1', '61');
-INSERT INTO `sys_role_privilege` VALUES ('142', '1', '62');
-INSERT INTO `sys_role_privilege` VALUES ('143', '1', '63');
-INSERT INTO `sys_role_privilege` VALUES ('144', '1', '2');
-INSERT INTO `sys_role_privilege` VALUES ('145', '1', '3');
-INSERT INTO `sys_role_privilege` VALUES ('146', '1', '14');
-INSERT INTO `sys_role_privilege` VALUES ('147', '1', '15');
-INSERT INTO `sys_role_privilege` VALUES ('148', '1', '21');
-INSERT INTO `sys_role_privilege` VALUES ('220', '2', '9');
-INSERT INTO `sys_role_privilege` VALUES ('221', '2', '10');
-INSERT INTO `sys_role_privilege` VALUES ('222', '2', '11');
-INSERT INTO `sys_role_privilege` VALUES ('223', '2', '12');
-INSERT INTO `sys_role_privilege` VALUES ('224', '2', '13');
-INSERT INTO `sys_role_privilege` VALUES ('225', '2', '55');
-INSERT INTO `sys_role_privilege` VALUES ('226', '2', '69');
-INSERT INTO `sys_role_privilege` VALUES ('227', '2', '70');
-INSERT INTO `sys_role_privilege` VALUES ('228', '2', '71');
-INSERT INTO `sys_role_privilege` VALUES ('229', '2', '72');
-INSERT INTO `sys_role_privilege` VALUES ('230', '2', '1');
-INSERT INTO `sys_role_privilege` VALUES ('231', '2', '4');
-INSERT INTO `sys_role_privilege` VALUES ('232', '2', '5');
-INSERT INTO `sys_role_privilege` VALUES ('233', '2', '6');
-INSERT INTO `sys_role_privilege` VALUES ('234', '2', '7');
-INSERT INTO `sys_role_privilege` VALUES ('235', '2', '8');
-INSERT INTO `sys_role_privilege` VALUES ('236', '2', '34');
-INSERT INTO `sys_role_privilege` VALUES ('237', '2', '35');
-INSERT INTO `sys_role_privilege` VALUES ('238', '2', '73');
-INSERT INTO `sys_role_privilege` VALUES ('239', '2', '74');
-INSERT INTO `sys_role_privilege` VALUES ('240', '2', '75');
-INSERT INTO `sys_role_privilege` VALUES ('241', '2', '76');
-INSERT INTO `sys_role_privilege` VALUES ('242', '2', '77');
-INSERT INTO `sys_role_privilege` VALUES ('243', '2', '78');
-INSERT INTO `sys_role_privilege` VALUES ('244', '2', '79');
-INSERT INTO `sys_role_privilege` VALUES ('245', '2', '80');
-INSERT INTO `sys_role_privilege` VALUES ('246', '2', '16');
-INSERT INTO `sys_role_privilege` VALUES ('247', '2', '22');
-INSERT INTO `sys_role_privilege` VALUES ('248', '2', '23');
-INSERT INTO `sys_role_privilege` VALUES ('249', '2', '24');
-INSERT INTO `sys_role_privilege` VALUES ('250', '2', '25');
-INSERT INTO `sys_role_privilege` VALUES ('251', '2', '17');
-INSERT INTO `sys_role_privilege` VALUES ('252', '2', '26');
-INSERT INTO `sys_role_privilege` VALUES ('253', '2', '27');
-INSERT INTO `sys_role_privilege` VALUES ('254', '2', '28');
-INSERT INTO `sys_role_privilege` VALUES ('255', '2', '29');
-INSERT INTO `sys_role_privilege` VALUES ('256', '2', '81');
-INSERT INTO `sys_role_privilege` VALUES ('257', '2', '82');
-INSERT INTO `sys_role_privilege` VALUES ('258', '2', '83');
-INSERT INTO `sys_role_privilege` VALUES ('259', '2', '84');
-INSERT INTO `sys_role_privilege` VALUES ('260', '2', '18');
-INSERT INTO `sys_role_privilege` VALUES ('261', '2', '30');
-INSERT INTO `sys_role_privilege` VALUES ('262', '2', '31');
-INSERT INTO `sys_role_privilege` VALUES ('263', '2', '32');
-INSERT INTO `sys_role_privilege` VALUES ('264', '2', '33');
-INSERT INTO `sys_role_privilege` VALUES ('265', '2', '19');
-INSERT INTO `sys_role_privilege` VALUES ('266', '2', '60');
-INSERT INTO `sys_role_privilege` VALUES ('267', '2', '61');
-INSERT INTO `sys_role_privilege` VALUES ('268', '2', '62');
-INSERT INTO `sys_role_privilege` VALUES ('269', '2', '63');
-INSERT INTO `sys_role_privilege` VALUES ('270', '2', '85');
-INSERT INTO `sys_role_privilege` VALUES ('271', '2', '86');
-INSERT INTO `sys_role_privilege` VALUES ('272', '2', '87');
-INSERT INTO `sys_role_privilege` VALUES ('273', '2', '88');
-INSERT INTO `sys_role_privilege` VALUES ('274', '2', '2');
-INSERT INTO `sys_role_privilege` VALUES ('275', '2', '3');
-INSERT INTO `sys_role_privilege` VALUES ('276', '2', '14');
-INSERT INTO `sys_role_privilege` VALUES ('277', '2', '15');
-INSERT INTO `sys_role_privilege` VALUES ('278', '2', '21');
-INSERT INTO `sys_role_privilege` VALUES ('279', '2', '38');
-INSERT INTO `sys_role_privilege` VALUES ('280', '2', '39');
-INSERT INTO `sys_role_privilege` VALUES ('281', '2', '40');
-INSERT INTO `sys_role_privilege` VALUES ('282', '2', '41');
-INSERT INTO `sys_role_privilege` VALUES ('283', '2', '44');
-INSERT INTO `sys_role_privilege` VALUES ('284', '2', '46');
-INSERT INTO `sys_role_privilege` VALUES ('285', '2', '42');
-INSERT INTO `sys_role_privilege` VALUES ('286', '2', '64');
-INSERT INTO `sys_role_privilege` VALUES ('287', '2', '65');
-INSERT INTO `sys_role_privilege` VALUES ('288', '2', '66');
-INSERT INTO `sys_role_privilege` VALUES ('289', '2', '67');
-INSERT INTO `sys_role_privilege` VALUES ('290', '2', '68');
+INSERT INTO `sys_role_privilege` VALUES ('11', '1', '9');
+INSERT INTO `sys_role_privilege` VALUES ('12', '1', '16');
+INSERT INTO `sys_role_privilege` VALUES ('13', '1', '17');
+INSERT INTO `sys_role_privilege` VALUES ('14', '1', '18');
+INSERT INTO `sys_role_privilege` VALUES ('15', '1', '19');
+INSERT INTO `sys_role_privilege` VALUES ('16', '1', '20');
+INSERT INTO `sys_role_privilege` VALUES ('17', '1', '1');
+INSERT INTO `sys_role_privilege` VALUES ('18', '1', '4');
+INSERT INTO `sys_role_privilege` VALUES ('19', '1', '5');
+INSERT INTO `sys_role_privilege` VALUES ('20', '1', '6');
+INSERT INTO `sys_role_privilege` VALUES ('21', '1', '7');
+INSERT INTO `sys_role_privilege` VALUES ('22', '1', '8');
+INSERT INTO `sys_role_privilege` VALUES ('23', '1', '34');
+INSERT INTO `sys_role_privilege` VALUES ('24', '1', '35');
+INSERT INTO `sys_role_privilege` VALUES ('25', '1', '10');
+INSERT INTO `sys_role_privilege` VALUES ('26', '1', '11');
+INSERT INTO `sys_role_privilege` VALUES ('27', '1', '12');
+INSERT INTO `sys_role_privilege` VALUES ('28', '1', '13');
+INSERT INTO `sys_role_privilege` VALUES ('29', '1', '55');
+INSERT INTO `sys_role_privilege` VALUES ('30', '1', '22');
+INSERT INTO `sys_role_privilege` VALUES ('31', '1', '23');
+INSERT INTO `sys_role_privilege` VALUES ('32', '1', '24');
+INSERT INTO `sys_role_privilege` VALUES ('33', '1', '25');
+INSERT INTO `sys_role_privilege` VALUES ('34', '1', '26');
+INSERT INTO `sys_role_privilege` VALUES ('35', '1', '27');
+INSERT INTO `sys_role_privilege` VALUES ('36', '1', '28');
+INSERT INTO `sys_role_privilege` VALUES ('37', '1', '29');
+INSERT INTO `sys_role_privilege` VALUES ('38', '1', '30');
+INSERT INTO `sys_role_privilege` VALUES ('39', '1', '31');
+INSERT INTO `sys_role_privilege` VALUES ('40', '1', '32');
+INSERT INTO `sys_role_privilege` VALUES ('41', '1', '33');
+INSERT INTO `sys_role_privilege` VALUES ('42', '1', '60');
+INSERT INTO `sys_role_privilege` VALUES ('43', '1', '61');
+INSERT INTO `sys_role_privilege` VALUES ('44', '1', '62');
+INSERT INTO `sys_role_privilege` VALUES ('45', '1', '63');
+INSERT INTO `sys_role_privilege` VALUES ('46', '1', '56');
+INSERT INTO `sys_role_privilege` VALUES ('47', '1', '57');
+INSERT INTO `sys_role_privilege` VALUES ('48', '1', '58');
+INSERT INTO `sys_role_privilege` VALUES ('49', '1', '59');
+INSERT INTO `sys_role_privilege` VALUES ('50', '1', '2');
+INSERT INTO `sys_role_privilege` VALUES ('51', '1', '3');
+INSERT INTO `sys_role_privilege` VALUES ('52', '1', '14');
+INSERT INTO `sys_role_privilege` VALUES ('53', '1', '15');
+INSERT INTO `sys_role_privilege` VALUES ('54', '1', '21');
+INSERT INTO `sys_role_privilege` VALUES ('131', '2', '3');
+INSERT INTO `sys_role_privilege` VALUES ('132', '2', '2');
+INSERT INTO `sys_role_privilege` VALUES ('133', '2', '14');
+INSERT INTO `sys_role_privilege` VALUES ('134', '2', '15');
+INSERT INTO `sys_role_privilege` VALUES ('135', '2', '21');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -3917,10 +3814,10 @@ CREATE TABLE `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(32) DEFAULT NULL,
   `realname` varchar(32) DEFAULT NULL,
-  `password` varchar(128) DEFAULT NULL,
+  `password` varchar(128) DEFAULT '1',
   `email` varchar(64) DEFAULT NULL,
   `geneder` int(2) DEFAULT NULL,
-  `inputTime` datetime DEFAULT NULL,
+  `inputTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(2) DEFAULT '1',
   `birthday` datetime DEFAULT NULL,
   `departmentId` int(11) DEFAULT NULL,
@@ -3929,16 +3826,13 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`id`),
   KEY `sys_user_ibfk_1` (`departmentId`),
   CONSTRAINT `sys_user_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `sys_department` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', null, null, '2015-08-11 13:52:22', '1', null, null, '管理员', null);
-INSERT INTO `sys_user` VALUES ('2', 'test', 'test', 'e10adc3949ba59abbe56e057f20f883e', 'test@qq.com', null, '2015-08-11 13:53:25', '1', null, null, '测试员', null);
-INSERT INTO `sys_user` VALUES ('4', 'gongliang', '龚亮', 'e10adc3949ba59abbe56e057f20f883e', 'gongliang@qq.com', '1', '2015-10-14 16:03:35', '1', '1999-10-21 00:00:00', null, '', '');
-INSERT INTO `sys_user` VALUES ('8', 'system', 'system', 'e10adc3949ba59abbe56e057f20f883e', null, null, '2016-03-01 15:48:40', '1', null, null, '系统管理员', null);
-INSERT INTO `sys_user` VALUES ('10', 'operate1', '运营', 'e10adc3949ba59abbe56e057f20f883e', null, '1', '2016-03-01 16:04:05', null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('2', 'test', 'test', null, 'test@qq.com', null, '2015-08-11 13:53:25', '1', null, null, '测试员', null);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -3953,14 +3847,13 @@ CREATE TABLE `sys_user_role` (
   KEY `roleId` (`roleId`),
   CONSTRAINT `sys_user_role_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `sys_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `sys_user_role_ibfk_2` FOREIGN KEY (`roleId`) REFERENCES `sys_role` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('6', '2', '2');
-INSERT INTO `sys_user_role` VALUES ('7', '10', '7');
 
 -- ----------------------------
 -- View structure for sys_module
