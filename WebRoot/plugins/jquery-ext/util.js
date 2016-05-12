@@ -12,6 +12,24 @@ $u.getRootPath=function(){
     var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
     return (localhostPaht + projectName);
 };
+//获取页面传来的值
+$u.GetQueryString=function(sProp)  
+{  
+    var re = new RegExp("[&,?]"+sProp + "=([^//&]*)", "i");  
+    var a = re.exec(document.location.search);  
+    if (a == null)  
+        return "";  
+    return a[1];  
+};
+//解析uri传来的参数为json
+$u.paresURI=function(uri){
+   var patten=/([-\w]+)=([\w,%]+)/ig;
+   var parames = {};
+   uri.replace(patten, function(a, b, c){
+       parames[b] = c;
+   });
+   return parames;
+};
 /*
  * true 为移动端,false为pc端
  * */
@@ -46,8 +64,16 @@ $u.toHtmlEncode = function (str) {
     temp = temp.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
     return temp;
 };
-$u.isEmpty=function(str){
-    return str == null || !str || typeof str == undefined || str == '';
+$u.isEmpty=function(value){
+	if(value==null||value==undefined||String(value).replace(/(^\s*)|(\s*$)/g,"").length<=0){
+		return true;
+	}
+	if(typeof(value)=="object"){
+		 for (var item in value){
+			 return false;
+		 }
+		 return true;
+	}
 };
 // 转换成全角
 $u.toCase = function (str) {

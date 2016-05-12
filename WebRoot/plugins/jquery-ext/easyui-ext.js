@@ -168,7 +168,7 @@ easyExt.form=function($url,callback){
 				$('#addDialog').dialog('close');
 			   if(callback && typeof(callback) === "function"){
 				   window.setTimeout(function(){ 
-			         callback();
+			         callback(data);
 		           },0); 
 			   }
 			}else{

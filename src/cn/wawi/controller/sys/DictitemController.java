@@ -7,4 +7,9 @@ import com.jfinal.ext.route.ControllerBind;
 @ControllerBind(controllerKey="/sys_dictitem")
 public class DictitemController extends BaseController<Dictitem>{
 
+	@Override
+	public String getSql() {
+    	String sql="select * from "+tablename;
+		return sql;
+	}
 }

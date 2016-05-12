@@ -1,9 +1,12 @@
 package cn.wawi.controller.sys;
 
 import cn.wawi.common.annotation.Permission;
+import cn.wawi.common.interceptor.Conditions;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Privilege;
 import cn.wawi.utils.DbUtil;
+import cn.wawi.utils.StringUtil;
+
 import com.jfinal.ext.route.ControllerBind;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.render.JsonRender;
@@ -35,5 +38,20 @@ public class PrivilegeController extends BaseController<Privilege>{
 	@Permission("sys:privilege:menu:view")
 	public void menu(){
 		renderFreeMarker("/views/sys/Privilege/menu.html");
+	}
+	@Override
+	public String getSql() {
+		Conditions condi = new Conditions();
+		Privilege privilege=new Privilege();
+		privilege.setStatus(getPara("status"));
+		privilege.setName(getPara("name"));
+		privilege.setId(StringUtil.parseInteger(getPara("id")));
+		privilege.setParentId(StringUtil.parseInteger(getPara("parentId")));
+    	condi.setFiledQuery(Conditions.FUZZY, "name");
+    	condi.modelToCondition(privilege);
+    	params.clear();
+    	params.addAll(condi.getParamList());
+    	String sql="select * from "+tablename;
+		return sql+condi.getSql();
 	}
 }

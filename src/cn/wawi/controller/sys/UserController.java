@@ -1,7 +1,8 @@
 package cn.wawi.controller.sys;
 
-import cn.wawi.common.annotation.Logs;
+import cn.wawi.common.interceptor.Conditions;
 import cn.wawi.common.interceptor.GlobalInterceptor;
+import cn.wawi.common.interceptor.LogInterceptor;
 import cn.wawi.common.interceptor.LoginInterceptor;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Privilege;
@@ -14,8 +15,8 @@ import com.jfinal.ext.route.ControllerBind;
 @ControllerBind(controllerKey="/sys_user")
 public class UserController extends BaseController<User>{
 
-	@Logs(des="用户登录")
-	@Clear(GlobalInterceptor.class)
+	
+	@Clear({GlobalInterceptor.class,LogInterceptor.class})
 	@Before(LoginInterceptor.class)
 	public void login() {
 		User user=getSessionAttr("loginUser");
@@ -25,15 +26,34 @@ public class UserController extends BaseController<User>{
             	setAttr("msg", "用户名或密码不对!");
             	renderFreeMarker("/login.html");
         	}
+        	setSessionAttr("loginUser", user);
     	}
-		setSessionAttr("loginUser", user);
-		setAttr("permissions", Privilege.dao.findUserPermission(user.get("id"),"F"));
+		setAttr("permissions", Privilege.dao.findUserPermission(user.get("id")));
 		renderFreeMarker("/index.html");
 	}
-	
 	public void exit(){
 		getSession().removeAttribute("loginUser");
 		getSession().invalidate();
 		renderFreeMarker("/login.html");
+	}
+	
+	@Override
+	public String getSql() {
+		Conditions condi = new Conditions();
+		User user=new User();
+		user.setEmail(getPara("name"));
+		user.setUsername(getPara("name"));
+		user.setRealname(getPara("name"));
+		user.setStatus(getPara("status"));
+		user.setPhone(getPara("name"));
+		user.setInputTime(null);
+    	condi.setValueQuery(Conditions.GREATER_EQUAL, "inputTime", getPara("startTime")); //开始时间
+    	condi.setValueQuery(Conditions.LESS_EQUAL, "inputTime", getPara("endTime")); //结束时间
+    	condi.setFiledQuery(Conditions.FUZZY, "phone","realname","username","email");
+    	condi.modelToCondition(user,"u");
+    	params.clear();
+    	params.addAll(condi.getParamList());
+    	String sql="select u.*,d.name from "+tablename +" u left JOIN sys_department d on u.departmentId=d.id ";
+		return sql+condi.getSql();
 	}
 }

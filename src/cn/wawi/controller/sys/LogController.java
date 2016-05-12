@@ -3,6 +3,7 @@ package cn.wawi.controller.sys;
 import java.util.LinkedHashMap;
 import java.util.List;
 import cn.wawi.common.annotation.Permission;
+import cn.wawi.common.interceptor.Conditions;
 import cn.wawi.common.interceptor.JxlRender;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Log;
@@ -38,4 +39,24 @@ public class LogController extends BaseController<Log>{
 			}));
 			//render(PoiRender.me(Log.dao.findAll()).fileName("ad.xls").headers(headers).cellWidth(5000).columns(columns).sheetName("日志列表"));
 		}
+
+		@Override
+		public String getSql() {
+			Conditions condi = new Conditions();
+			Log log=new Log();
+			log.setOptUser(getPara("name"));
+			log.setOs(getPara("name"));
+			log.setBrowser(getPara("name"));
+			log.setRealname(getPara("name"));
+			log.setInputTime(null);
+	    	condi.setValueQuery(Conditions.GREATER_EQUAL, "inputTime", getPara("startTime")); //开始时间
+	    	condi.setValueQuery(Conditions.LESS_EQUAL, "inputTime", getPara("endTime")); //结束时间
+	    	condi.setFiledQuery(Conditions.FUZZY, "optUser","realname","os","browser");
+	    	condi.modelToCondition(log);
+	    	params.clear();
+	    	params=condi.getParamList();
+	    	String sql="select * from "+tablename;
+			return sql+condi.getSql();
+		}
+   
 }

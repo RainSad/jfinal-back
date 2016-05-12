@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.jfinal.kit.HashKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -16,6 +18,7 @@ public class DbUtil {
 		for (File xmlfile : filelist) {
 			 System.out.println(xmlfile.getName());
 		}
+		System.out.println(HashKit.md5("123456"));
 	}
 
 	// 递归查找路径strPath下的所有sql.xml后缀的文件

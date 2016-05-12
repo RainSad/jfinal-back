@@ -1,6 +1,7 @@
 package cn.wawi.controller.sys;
 
 import cn.wawi.common.annotation.Permission;
+import cn.wawi.common.interceptor.Conditions;
 import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Role;
 import com.jfinal.aop.Before;
@@ -23,7 +24,6 @@ public class RoleController extends BaseController<Role>{
 	 */
 	@Before(Tx.class)
 	public void saveRolePrivilege(){
-
 		String roleId=getPara("roleId");
 		Db.update("delete from sys_role_privilege where roleId=?", roleId);
 		String privilegeIds=getPara("privilegeIds");
@@ -53,6 +53,7 @@ public class RoleController extends BaseController<Role>{
 		String userId=getPara("userId");
 		Db.update("delete from sys_user_role where userId=?", userId);
 		String roleId=getPara("roleId");
+		System.out.println(roleId+":"+getPara("userId"));
 		if(roleId!=null&&!"".equals(roleId.trim())){
 			String[] roles=roleId.split(",");
 			Object[][] o=new Object[roles.length][2];
@@ -63,5 +64,18 @@ public class RoleController extends BaseController<Role>{
 			Db.batch("insert into sys_user_role(userId,roleId) values(?,?)",o, 1000);
 		}
 		render(new JsonRender(json).forIE());
+	}
+	@Override
+	public String getSql() {
+		Conditions condi = new Conditions();
+		Role role=new Role();
+		role.setName(getPara("name"));
+		role.setStatus(getPara("status"));
+    	condi.setFiledQuery(Conditions.FUZZY, "name");
+    	condi.modelToCondition(role);
+    	params.clear();
+    	params.addAll(condi.getParamList());
+    	String sql="select * from "+tablename;
+		return sql+condi.getSql();
 	}
 }

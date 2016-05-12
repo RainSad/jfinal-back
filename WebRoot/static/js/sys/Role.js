@@ -6,6 +6,7 @@ $(function(){
 	$("#del").click(function(){
 		var selRows=$('#dg').datagrid('getSelections');
 		easyExt.del(selRows,'/sys_role/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#dg').datagrid('clearSelections'); 
 			$('#dg').datagrid('reload'); 
 		});
 	});
@@ -19,6 +20,7 @@ $(function(){
 	$("#edit").click(function(){
 		var selRows=$('#dg').datagrid('getSelections');
 		easyExt.edit(selRows,'/sys_role/updateOne',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#dg').datagrid('clearSelections'); 
 			$('#dg').datagrid('reload'); 
 		});
 	});

@@ -43,7 +43,7 @@ public class AutoBindRoutes extends Routes {
         return this;
     }
 
-    public AutoBindRoutes addExcludeClasses(Class<? extends Controller>... clazzes) {
+    public AutoBindRoutes addExcludeClasses(@SuppressWarnings("unchecked") Class<? extends Controller>... clazzes) {
         if (clazzes != null) {
             for (Class<? extends Controller> clazz : clazzes) {
                 excludeClasses.add(clazz);

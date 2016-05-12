@@ -5,6 +5,7 @@ $(function() {
 	$("#del").click(function(){
 		var selRows=$('#dg').datagrid('getSelections');
 		easyExt.del(selRows,'/sys_user/deleteBatch',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#dg').datagrid('clearSelections'); 
 			$('#dg').datagrid('reload'); 
 		});
 	});
@@ -18,6 +19,7 @@ $(function() {
 	$("#edit").click(function(){
 		var selRows=$('#dg').datagrid('getSelections');
 		easyExt.edit(selRows,'/sys_user/updateOne',function(){//删除成功后执行的动作，一般用于刷新datagrid
+			$('#dg').datagrid('clearSelections'); 
 			$('#dg').datagrid('reload'); 
 		});
 	});
@@ -42,6 +44,7 @@ $(function() {
 		}
 	});
 	function getUserRole(user){
+		console.log(user);
 		var json={};
 		var roleId="";
 		$('#userRole').dialog({

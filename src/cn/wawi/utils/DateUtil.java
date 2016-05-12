@@ -54,9 +54,12 @@ public class DateUtil extends DateUtils{
 	 * 得到当前时间字符串 格式（HH:mm:ss）
 	 */
 	public static String getTime() {
-		return formatDate(new Date(), "HH:mm:ss");
+		return formatDate(new Date(), "yyyyMMddHHmmssS");
 	}
 
+	public static void main(String[] args) {
+		System.out.println(getTime());
+	}
 	/**
 	 * 得到当前日期和时间字符串 格式（yyyy-MM-dd HH:mm:ss）
 	 */

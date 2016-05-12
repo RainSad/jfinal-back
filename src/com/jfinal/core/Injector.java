@@ -107,16 +107,19 @@ public class Injector {
 	        for(Entry<String, Class<?>> entry: columnTypeMap.entrySet()){
 	            //request中设定了相应的属性
 	            for(Entry<String,String[]> e: parasMap.entrySet()){
-	            	if(e.getKey().toString().contains(entry.getKey())){
+	            	if(e.getKey().toString().replaceAll("_", "").equalsIgnoreCase(entry.getKey().replaceAll("_", ""))){
 	                    Class<?> colType = entry.getValue();
 	                    String[] paraValue = parasMap.get(e.getKey());
 	                    // Object value = Converter.convert(colType, paraValue != null ? paraValue[0] : null);
 	                    Object value = paraValue[0] != null ? TypeConverter.convert(colType, paraValue[0]) : null;
-	                    model.set(entry.getKey(), value);
+		            	model.set(entry.getKey(), value);
 	                    break;
 	            	}
 	            }
 	        }
+			if(StrKit.notBlank(request.getParameter("id"))){
+				model.set(table.getPrimaryKey()[0], Integer.parseInt(request.getParameter("id")));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

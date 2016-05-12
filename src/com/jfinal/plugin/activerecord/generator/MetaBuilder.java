@@ -1,142 +1,136 @@
-/**
- * Copyright (c) 2011-2016, James Zhan 詹波 (jfinal@126.com).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+/*** Eclipse Class Decompiler plugin, copyright (c) 2012 Chao Chen (cnfree2000@hotmail.com) ***/
 package com.jfinal.plugin.activerecord.generator;
 
+import com.jfinal.kit.StrKit;
+import com.jfinal.plugin.activerecord.dialect.Dialect;
+import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
+import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.sql.DataSource;
-import com.jfinal.kit.StrKit;
-import com.jfinal.plugin.activerecord.dialect.Dialect;
-import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
-import com.jfinal.plugin.activerecord.generator.ColumnMeta;
-import com.jfinal.plugin.activerecord.generator.TableMeta;
-import com.jfinal.plugin.activerecord.generator.TypeMapping;
 
-/**
- * MetaBuilder
- */
 public class MetaBuilder {
-	
 	protected DataSource dataSource;
 	protected Dialect dialect = new MysqlDialect();
-	protected Set<String> excludedTables = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-	
+	protected Set<String> excludedTables = new TreeSet<String>(
+			String.CASE_INSENSITIVE_ORDER);
+
 	protected Connection conn = null;
 	protected DatabaseMetaData dbMeta = null;
-	
+
 	protected String[] removedTableNamePrefixes = null;
-	
-	private TypeMapping typeMapping = new TypeMapping();
-	
+
+	protected TypeMapping typeMapping = new TypeMapping();
+
 	public MetaBuilder(DataSource dataSource) {
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource can not be null.");
 		}
 		this.dataSource = dataSource;
 	}
-	
+
 	public void setDialect(Dialect dialect) {
-		if (dialect != null) {
+		if (dialect != null)
 			this.dialect = dialect;
-		}
 	}
-	
-	public void addExcludedTable(String... excludedTables) {
-		if (excludedTables != null) {
-			for (String table : excludedTables) {
+
+	public void addExcludedTable(String[] excludedTables) {
+		if (excludedTables != null)
+			for (String table : excludedTables)
 				this.excludedTables.add(table);
-			}
-		}
 	}
-	
-	/**
-	 * 设置需要被移除的表名前缀，仅用于生成 modelName 与  baseModelName
-	 * 例如表名  "osc_account"，移除前缀 "osc_" 后变为 "account"
-	 */
-	public void setRemovedTableNamePrefixes(String... removedTableNamePrefixes) {
+
+	public void setRemovedTableNamePrefixes(String[] removedTableNamePrefixes) {
 		this.removedTableNamePrefixes = removedTableNamePrefixes;
 	}
-	
+
 	public void setTypeMapping(TypeMapping typeMapping) {
-		if (typeMapping != null) {
+		if (typeMapping != null)
 			this.typeMapping = typeMapping;
-		}
 	}
-	
+
 	public List<TableMeta> build() {
 		System.out.println("Build TableMeta ...");
+		List<TableMeta> ret = new ArrayList<TableMeta>();
 		try {
-			conn = dataSource.getConnection();
-			dbMeta = conn.getMetaData();
+			this.conn = this.dataSource.getConnection();
+			this.dbMeta = this.conn.getMetaData();
 			
-			List<TableMeta> ret = new ArrayList<TableMeta>();
 			buildTableNames(ret);
 			for (TableMeta tableMeta : ret) {
 				buildPrimaryKey(tableMeta);
 				buildColumnMetas(tableMeta);
 			}
-			return ret;
+		} catch (SQLException e) {
+		} finally {
+			if (this.conn != null)
+				try {
+					this.conn.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
 		}
-		catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (conn != null)
-				try {conn.close();} catch (SQLException e) {throw new RuntimeException(e);}
-		}
+		return ret;
 	}
-	
+
+	protected boolean isSkipTable(String tableName) {
+		return false;
+	}
+
+	protected String buildModelName(String tableName) {
+		if (this.removedTableNamePrefixes != null) {
+			for (String prefix : this.removedTableNamePrefixes) {
+				if (tableName.startsWith(prefix)) {
+					tableName = tableName.replaceFirst(prefix, "");
+					break;
+				}
+			}
+
+		}
+
+		if (this.dialect instanceof OracleDialect) {
+			tableName = tableName.toLowerCase();
+		}
+
+		return StrKit.firstCharToUpperCase(StrKit.toCamelCase(tableName));
+	}
+
+	protected String buildBaseModelName(String modelName) {
+		return "Base" + modelName;
+	}
+
+	protected ResultSet getTablesResultSet() throws SQLException {
+		String schemaPattern = (this.dialect instanceof OracleDialect) ? this.dbMeta
+				.getUserName() : null;
+		return this.dbMeta.getTables(this.conn.getCatalog(), schemaPattern,
+				null, new String[] { "TABLE", "VIEW" });
+	}
+
 	protected void buildTableNames(List<TableMeta> ret) throws SQLException {
-		String userName = dialect.isOracle() ? dbMeta.getUserName() : null;
-		ResultSet rs = dbMeta.getTables(conn.getCatalog(), userName, null, new String[]{"TABLE", "VIEW"});
+		ResultSet rs = getTablesResultSet();
 		while (rs.next()) {
 			String tableName = rs.getString("TABLE_NAME");
-			
-			if (isRemoveTable(tableName,excludedTables)) {
-				System.out.println("Skip excluded table :" + tableName);
-			}
-			else {
+
+
+			if (isRemoveTable(tableName,excludedTables))  {
+				System.out.println("Skip table :" + tableName);
+			} else if (isSkipTable(tableName)) {
+				System.out.println("Skip table :" + tableName);
+			} else {
 				TableMeta tableMeta = new TableMeta();
 				tableMeta.name = tableName;
 				tableMeta.remarks = rs.getString("REMARKS");
-				
-				// 移除表名前缀仅用于生成 modelName、baseModelName。tableMeta.name 表名自身不受影响
-				if (removedTableNamePrefixes != null) {
-					for (String prefix : removedTableNamePrefixes) {
-						if (tableName.startsWith(prefix)) {
-							tableName = tableName.replaceFirst(prefix, "");
-							break;
-						}
-					}
-				}
-				if (dialect.isOracle()) {
-					tableName = tableName.toLowerCase();
-				}
-				tableMeta.modelName = StrKit.firstCharToUpperCase(StrKit.toCamelCase(tableName));
-				tableMeta.baseModelName = "Base" + tableMeta.modelName;
+
+				tableMeta.modelName = buildModelName(tableName);
+				tableMeta.baseModelName = buildBaseModelName(tableMeta.modelName);
 				ret.add(tableMeta);
 			}
 		}
@@ -153,71 +147,59 @@ public class MetaBuilder {
 		return flag;
 	}
 	protected void buildPrimaryKey(TableMeta tableMeta) throws SQLException {
-		ResultSet rs = dbMeta.getPrimaryKeys(conn.getCatalog(), null, tableMeta.name);
-		
+		ResultSet rs = this.dbMeta.getPrimaryKeys(this.conn.getCatalog(), null,
+				tableMeta.name);
+
 		String primaryKey = "";
 		int index = 0;
 		while (rs.next()) {
 			if (index++ > 0)
-				primaryKey += ",";
-			primaryKey += rs.getString("COLUMN_NAME");
+				primaryKey = primaryKey + ",";
+			primaryKey = primaryKey + rs.getString("COLUMN_NAME");
 		}
 		tableMeta.primaryKey = primaryKey;
 		rs.close();
 	}
-	
-	/**
-	 * 文档参考：
-	 * http://dev.mysql.com/doc/connector-j/en/connector-j-reference-type-conversions.html
-	 * 
-	 * JDBC 与时间有关类型转换规则，mysql 类型到 java 类型如下对应关系：
-	 * DATE				java.sql.Date
-	 * DATETIME			java.sql.Timestamp
-	 * TIMESTAMP[(M)]	java.sql.Timestamp
-	 * TIME				java.sql.Time
-	 * 
-	 * 对数据库的 DATE、DATETIME、TIMESTAMP、TIME 四种类型注入 new java.util.Date()对象保存到库以后可以达到“秒精度”
-	 * 为了便捷性，getter、setter 方法中对上述四种字段类型采用 java.util.Date，可通过定制 TypeMapping 改变此映射规则
-	 */
+
 	protected void buildColumnMetas(TableMeta tableMeta) throws SQLException {
-		String sql = dialect.forTableBuilderDoBuild(tableMeta.name);
-		Statement stm = conn.createStatement();
+		String sql = this.dialect.forTableBuilderDoBuild(tableMeta.name);
+		Statement stm = this.conn.createStatement();
 		ResultSet rs = stm.executeQuery(sql);
 		ResultSetMetaData rsmd = rs.getMetaData();
-		
-		for (int i=1; i<=rsmd.getColumnCount(); i++) {
+
+		for (int i = 1; i <= rsmd.getColumnCount(); ++i) {
 			ColumnMeta cm = new ColumnMeta();
 			cm.name = rsmd.getColumnName(i);
-			
+
 			String colClassName = rsmd.getColumnClassName(i);
-			String typeStr = typeMapping.getType(colClassName);
+			String typeStr = this.typeMapping.getType(colClassName);
 			if (typeStr != null) {
 				cm.javaType = typeStr;
-			}
-			else {
+			} else {
 				int type = rsmd.getColumnType(i);
-				if (type == Types.BINARY || type == Types.VARBINARY || type == Types.BLOB) {
+				if ((type == -2) || (type == -3) || (type == 2004)) {
 					cm.javaType = "byte[]";
-				}
-				else if (type == Types.CLOB || type == Types.NCLOB) {
+				} else if ((type == 2005) || (type == 2011)) {
+					cm.javaType = "java.lang.String";
+				} else {
 					cm.javaType = "java.lang.String";
 				}
-				else {
-					cm.javaType = "java.lang.String";
-				}
+
 			}
-			
+
+			cm.attrName = buildAttrName(cm.name);
+
 			tableMeta.columnMetas.add(cm);
 		}
-		
+
 		rs.close();
 		stm.close();
 	}
+
+	protected String buildAttrName(String colName) {
+		if (this.dialect instanceof OracleDialect) {
+			colName = colName.toLowerCase();
+		}
+		return StrKit.toCamelCase(colName);
+	}
 }
-
-
-
-
-
-
-

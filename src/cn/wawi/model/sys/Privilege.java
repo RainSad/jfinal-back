@@ -16,7 +16,7 @@ public class Privilege extends BasePrivilege<Privilege> {
 	/**
 	 * 查询登录用户的权限-树
 	 */
-	public List<Map<String,Object>> findUserPermission(Object userId,String type){
+	public List<Map<String,Object>> findUserPermission(Object userId){
 		return DbUtil.findTree(Db.find("select id,iconCls,name,url,description,parentId, permCode from sys_module where userId=? and type='F'",new Object[]{userId}));
 	}
 }
