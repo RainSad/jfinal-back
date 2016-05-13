@@ -85,3 +85,11 @@ $(function() {
 		$('#ur_dg').datagrid('clearSelections'); //清除选择项
 	}
 });
+function formatter(value, row, index){
+	return '<a href="javascript:initPwd('+row.id+')"><div class="icon-redo" style="width:16px;height:16px" title="初始化密码"></div></a>';
+}
+function initPwd(id){
+	$.post(easyExt.url+"/sys_user/initPwd",{id:id},function(data,status, xhr){
+		$.messager.alert("提示", "初始化密码成功！", "info");
+	});
+}

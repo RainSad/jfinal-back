@@ -8,9 +8,14 @@ import cn.wawi.controller.BaseController;
 import cn.wawi.model.sys.Privilege;
 import cn.wawi.model.sys.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.ext.route.ControllerBind;
+import com.jfinal.kit.HashKit;
+import com.jfinal.render.JsonRender;
 
 @ControllerBind(controllerKey="/sys_user")
 public class UserController extends BaseController<User>{
@@ -36,7 +41,21 @@ public class UserController extends BaseController<User>{
 		getSession().invalidate();
 		renderFreeMarker("/login.html");
 	}
-	
+	public void initPwd(){
+		User user=new User();
+		user.setId(getParaToInt("id"));
+		user.set("password", HashKit.md5("123456"));
+		if(!user.update()){
+			json.setResMsg("修改失败!");
+			json.setResCode(0);
+		}else{
+			List<User> list=new ArrayList<User>();
+			list.add(user);
+			json.setRows(list);
+			json.setTotal(1L);
+		}
+		render(new JsonRender(json).forIE());
+	}
 	@Override
 	public String getSql() {
 		Conditions condi = new Conditions();
