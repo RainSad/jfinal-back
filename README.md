@@ -1,8 +1,7 @@
 jfinal是由jfinal2.2+freemarker+easyui写的一个后台管理系统，参考了jty等一些优秀的开源项目，实现了一个基础的后台管理系统。这次更新整合了jfinal微信到后台管理系统。
-在线访问：http://pzl.hbwwcc.com/test
+在线访问：http://moriiy.wicp.net
 
-宾客帐号：guest密码：guest  
-管理员账号: admin 123456尽量不要做些修改的操作。
+管理员账号: admin 123456尽量不要做些修改删除的操作。
 
 系统截图
 
