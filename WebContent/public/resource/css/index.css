@@ -1,0 +1,73 @@
+/****************北部样式*********************/
+.norths{
+	height: 36px;
+	overflow: hidden;
+}
+.north_bar{
+	width: 100%;
+	height: 36px;
+    font-weight: normal;
+    padding: 0;
+}
+.north_bar .north_left {
+	height: 36px; 
+	line-height: 36px;
+	margin-left: 2px; 
+	float: left;
+}
+.north_bar .north_center {
+	height: 36px; 
+	line-height: 36px;
+	margin-left: 24%; 
+	float: left;
+}
+.north_bar .north_right {
+	height: 36px; 
+	line-height: 36px;
+	margin-left: 5px; 
+	float: right;
+}
+.north_bar .north_left .icon-metro-fire{
+	padding-left: 18px; 
+	background-position: left center;
+	font-family: 微软雅黑;
+	font-size: large;
+	margin-left: 5px;
+}
+.north_bar .north_right .icon-hamburg-user{
+	padding-left: 25px; 
+	background-position: left center;
+}
+.north_bar #buttonbar { 
+	float: right;
+	height: 36px;
+	margin-right: 5px;
+	padding-top: 1px;
+	text-align: right;
+}
+/****************南部样式*********************/
+.south{
+	height: 70px;
+}
+.south .content{
+	color: #4e5766; 
+	padding: 6px 0px 0px 0px; 
+	margin: 0px auto; 
+	text-align: center; 
+	font-size:12px; 
+	font-family:微软雅黑;
+}
+/****************中部样式*********************/
+.tabs-tool table {
+	border-width: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.tabs-tool table td { 
+	padding: 0; 
+}
+.center_index{
+	overflow: hidden;
+	margin-top: 5%;
+	margin-left: 25%;
+}

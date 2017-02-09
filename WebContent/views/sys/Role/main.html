@@ -1,0 +1,19 @@
+<#include "../../core/head.html" />
+<script type="text/javascript" src="${ctx}/public/js/sys/Role.js"></script>
+<body class="easyui-layout">
+<table id="role_datagrid"></table>
+<div id="role_toolbar" style="padding:5px;height:auto;">
+    <div style="margin-left:2px;">
+      <a class="easyui-linkbutton"  id="add_role" data-options="iconCls:'icon-add',plain:true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del_role" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit_role" data-options="iconCls:'icon-edit',plain:true">修改</a><span class="toolbar-item dialog-tool-separator"></span>
+	<a class="easyui-linkbutton" id="role_resource" data-options="iconCls:'icon-metro-lock',plain:true">权限分配</a>
+	</div>
+</div>
+<div id="role_dialog"  style="width:800px;height:480px;">
+<#include "role.html" />
+</div>
+<div id="rr_dialog"  style="width:280px;height:420px;">
+   <ul id="resources_tree"></ul>
+</div>
+</body>

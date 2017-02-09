@@ -1,0 +1,27 @@
+<form id="dictForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td class="table_left">标签：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="label" data-options="required:true,width: 200" type="text" class="easyui-textbox"/> 
+			</td>
+			<td class="table_left">值：</td>
+			<td><input name="value" type="text" class="easyui-textbox" data-options="width: 200"/></td>
+		</tr>
+		<tr>
+		    <td class="table_left"><font color="red">*</font>类型：</td>
+			<td><input name="type" type="text" data-options="width: 200" class="easyui-textbox"/></td>
+		    <td class="table_left">上级字典：</td>
+			<td><select name="parentId" id="parentId"></select></td>
+		</tr>
+		<tr>
+			<td class="table_left"><font color="red">*</font>状态：</td>
+		    <td><select id="status" name="status"></select></td>
+			<td class="table_left">描述：</td>
+			<td>
+				<input class="easyui-textbox" name="remark" data-options="multiline:true" value="" style="width:250px;height:80px">
+			</td>
+		</tr>
+	</table>
+</form>

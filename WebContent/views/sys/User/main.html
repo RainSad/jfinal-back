@@ -1,0 +1,28 @@
+<#include "../../core/head.html" />
+<script type="text/javascript" src="${ctx}/public/js/sys/User.js"></script>
+<body class="easyui-layout">
+<table id="user_datagrid"></table>
+
+<div id="user_toolbar" style="padding:5px;height:auto;">
+    <div style="margin-left:2px;">
+      <a class="easyui-linkbutton"  id="add_user" data-options="iconCls:'icon-add',plain:true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	  <a class="easyui-linkbutton" id="del_user" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="edit_user" data-options="iconCls:'icon-edit',plain:true">修改</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="user_role" data-options="iconCls:'icon-hamburg-my-account',plain:true">用户角色</a>
+	</div>
+	<div style="margin-left:2px;">
+	  <form action="#" id="userSearchForm" style="display:inline;">
+	  	<span style="margin-left:2px;">用户名: <input class="easyui-textbox" style="width:100px;" name="username"></input></span>
+	  	<span style="margin-left:2px;">姓名: <input class="easyui-textbox" style="width:100px;" name="realname"></input></span>
+	    <span style="margin-left:2px;"> 注册时间: <input class="easyui-datebox" style="width:100px;" name="startTime"></input>-<input class="easyui-datebox" name="endTime" style="width:100px"></input></span>
+	     <a href="#" class="easyui-linkbutton" style="width:100px;" id="search_user" data-options="iconCls:'icon-search'">查询</a>
+      </form>
+   </div>
+</div>
+<div id="user_dialog"  style="width:720px;height:480px;">
+<#include "user.html" />
+</div>
+<div id="ur_dialog"  style="width:280px;height:420px;">
+   <ul id="role_tree"></ul>
+</div>
+</body>

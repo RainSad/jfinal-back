@@ -1,0 +1,15 @@
+<#include "../../core/head.html" />
+<script type="text/javascript" src="${ctx}/public/js/sys/Dictionary.js"></script>
+<body class="easyui-layout">
+<table id="dict_treegrid"></table>
+<div id="dict_toolbar" style="padding:5px;height:auto;">
+    <div style="margin-left:2px;">
+    <a class="easyui-linkbutton"  id="add_dict" data-options="iconCls:'icon-add',plain:true">添加</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="del_dict" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	<a class="easyui-linkbutton" id="edit_dict" data-options="iconCls:'icon-edit',plain:true">修改</a>
+	</div>
+</div>
+<div id="dict_dialog"  style="width:720px;height:480px;">
+<#include "dict.html" />
+</div>
+</body>

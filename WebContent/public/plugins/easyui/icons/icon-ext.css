@@ -1,0 +1,39 @@
+.icon-ext-log{background:url('icon-ext/log.png') no-repeat center center;}
+.icon-ext-order{background:url('icon-ext/order.png') no-repeat center center;}
+.icon-berlin-1_close{background:url('icon-ext/1_close.png') no-repeat center center;}
+.icon-berlin-1_open{background:url('icon-ext/1_open.png') no-repeat center center;}
+.icon-berlin-2{background:url('icon-ext/2.png') no-repeat center center;}
+.icon-berlin-3{background:url('icon-ext/3.png') no-repeat center center;}
+.icon-berlin-4{background:url('icon-ext/4.png') no-repeat center center;}
+.icon-berlin-5{background:url('icon-ext/5.png') no-repeat center center;}
+.icon-berlin-6{background:url('icon-ext/6.png') no-repeat center center;}
+.icon-berlin-7{background:url('icon-ext/7.png') no-repeat center center;}
+.icon-berlin-8{background:url('icon-ext/8.png') no-repeat center center;}
+.icon-berlin-9{background:url('icon-ext/9.png') no-repeat center center;}
+.icon-ext-menu{background:url('icon-ext/menu.png') no-repeat center center;}
+.icon-standard-arrow-refresh{background:url('icon-ext/arrow-refresh.png') no-repeat center center;}
+.icon-standard-application-form-delete{background:url('icon-ext/application-form-delete.png') no-repeat center center;}
+.icon-standard-arrow-out{background:url('icon-ext/arrow-out.png') no-repeat center center;}
+.icon-standard-cog{background:url('icon-ext/cog.png') no-repeat center center;}
+.icon-cologne-check{background:url('icon-ext/check.png') no-repeat center center;}
+.icon-cologne-date{background:url('icon-ext/date.png') no-repeat center center;}
+.icon-cologne-home{background:url('icon-ext/home.png') no-repeat center center;}
+.icon-cologne-lock{background:url('icon-ext/lock.png') no-repeat center center;}
+.icon-cologne-login{background:url('icon-ext/login.png') no-repeat center center;}
+.icon-cologne-logout{background:url('icon-ext/logout.png') no-repeat center center;}
+.icon-cologne-user{background:url('icon-ext/user.png') no-repeat center center;}
+.icon-cologne-database{background:url('icon-ext/database.png') no-repeat center center;}
+
+
+
+
+
+
+
+.dialog-tool-separator {
+	float:none;!important;
+    height: 24px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #fff;
+    margin: 2px 1px;
+}

@@ -1,0 +1,41 @@
+<form id="userForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td class="table_left"><font color="red">*</font>用户名</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="username" data-options="required:true,width: 200,validType:'userName'" type="text" class="easyui-textbox"></input> 
+			</td>
+			<td class="table_left"><font color="red">*</font>姓名</td>
+			<td>
+			<input name="realname" data-options="required:true,width: 200" type="text" class="easyui-textbox"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="table_left">性别</td>
+			<td>
+				<input type="radio" id="man" name="geneder" value="1"/><label for="man">男</label>
+				<input type="radio" id="woman" name="geneder" value="2"/><label for="woman">女</label>
+			</td>
+			<td class="table_left"><font color="red">*</font>状态</td>
+            <td><select id="status" name="status"></select></td></tr>
+		<tr>
+			<td class="table_left">Email</td>
+			<td><input type="text" name="email"  class="easyui-textbox" data-options="width: 200,validType:'email'"/></td>
+			<td class="table_left">电话</td>
+			<td><input type="text" name="phone" class="easyui-textbox"  data-options="width: 200,validType:'Mobile'"/></td>
+		</tr>
+		<tr>
+			<td class="table_left">出生日期</td>
+			<td><input name="birthday" type="text" class="easyui-datebox"  data-options="width: 200"/></td>
+			<td class="table_left">部门</td>
+			<td><select name="deptId" id="dept" data-options="width: 200"></select></td>
+		</tr>
+		<tr>
+			<td class="table_left">描述</td>
+			<td colspan="3">
+				<input class="easyui-textbox" name="remark" data-options="multiline:true" value="" style="width:250px;height:80px">
+			</td>
+		</tr>
+	</table>
+</form>

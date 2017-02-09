@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" id="theme" href="${ctx}/public/plugins/easyui/themes/metro-blue/easyui.css" >
+<link rel="stylesheet" type="text/css" href="${ctx}/public/plugins/easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/public/plugins/easyui/icons/icon-all.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/public/plugins/easyui/icons/icon-ext.css" />
+<script type="text/javascript" src="${ctx}/public/plugins/core/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/core/jquery.cookie.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/jquery-ext/util.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/jquery-ext/jquery-ext.js"></script>
+<script type="text/javascript" src="${ctx}/public/plugins/jquery-ext/easyui-ext.js"></script>
+<title>系统-管理平台</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/public/resource/css/index.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/public/resource/css/main.css" />
+<script type="text/javascript" src="${ctx}/public/resource/js/index.js"></script>
+</head>
+<body id="main" class="easyui-layout">
+	<div data-options="region:'north',border:false" class="norths">
+	  <div class="north_bar panel-common">
+	     <div class="north_left"><span class="icon-metro-fire">湖北万维</span></div>
+	     <div class="north_right">
+	        <span class="icon-hamburg-user" id="realname"></span>
+	         <select id="themeSelector" class="easyui-combobox" style="width: 120px;"></select>
+	        <a id="btnUserPwd" class="easyui-linkbutton" data-options="plain: true,iconCls:'icon-cologne-lock'">修改密码</a>
+	         <a id="btnExit" class="easyui-linkbutton" data-options="plain: true, iconCls:'icon-hamburg-sign-out'">退出系统</a>
+	     </div>
+	  </div>
+	</div>
+	
+    <div data-options="region: 'center'">
+	    <div id="mainTabs_tools" class="tabs-tool">
+	        <table>
+	            <tr>
+	                <td><a id="mainTabs_jumpHome" class="easyui-linkbutton easyui-tooltip" title="跳转至主页选项卡" data-options="plain: true, iconCls: 'icon-hamburg-home'"></a></td>
+	                <td><div class="datagrid-btn-separator"></div></td>
+					<td><a id="btnFullScreen" class="easyui-linkbutton easyui-tooltip" title="展开/折叠面板使选项卡最大化" data-options="plain: true, iconCls: 'icon-standard-arrow-out'"></a></td>
+	                <td><div class="datagrid-btn-separator"></div></td>
+	                <td><a id="mainTabs_refTab" class="easyui-linkbutton easyui-tooltip" title="刷新当前选中的选项卡" data-options="plain: true, iconCls: 'icon-standard-arrow-refresh'"></a></td>
+	                <td><div class="datagrid-btn-separator"></div></td>
+	                <td><a id="mainTabs_closeTab" class="easyui-linkbutton easyui-tooltip" title="关闭所有选项卡" data-options="plain: true, iconCls: 'icon-standard-application-form-delete'"></a></td>
+	            </tr>
+	        </table>
+	    </div>
+        <div id="mainTabs" class="easyui-tabs" data-options="fit: true, border: false, showOption: true, enableNewTabMenu: true, tools: '#mainTabs_tools', enableJumpTabMenu: true">
+            <div title="首页" class="center_index"> 
+		         <div><img src="${ctx}/public/resource/images/login/index.jpg" width="50%;width:60%;"/></div>
+	        </div>
+        </div>
+    </div>
+    <div data-options="region: 'west', title: '菜单导航栏', iconCls: 'icon-ext-menu', split: true,  maxWidth: 300" style="width: 150px; padding: 1px;">
+        <div id="myMenu" class="easyui-accordion" data-options="fit:true,border:false">
+		</div>
+     </div>
+     
+    <div id="user_update_password_dialog" style="width:360px;height:240px;">
+	<form id="user_update_password_form" method="post">
+	  <table class="formTable">
+		<tr>
+			<td class="table_left">账号:</td>
+			<td>
+			  <div style="background-color:#8cdb8c;width:80px;text-align:center;margin-left:12%;color:white;" id="username"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="table_left">原密码:</td>
+			<td>
+				<input type="password" name="password" data-options="required:true" value=""/>
+			</td>
+		</tr>
+		<tr>
+			<td class="table_left">新密码:</td>
+			<td>
+				<input type="password" name="newPassword" data-options="required:true" value=""/>
+			</td>
+		</tr>
+	</table>
+    </form>
+	</div>
+     
+     
+	<#--
+	<div data-options="region: 'east', title: '日历', iconCls: 'icon-standard-date', split: true,collapsed: true, minWidth: 160, maxWidth: 500" style="width: 220px;">
+        <div id="eastLayout" class="easyui-layout" data-options="fit: true">
+            <div data-options="region: 'north', split: false, border: false" style="height: 220px;">
+                <div class="easyui-calendar" data-options="fit: true, border: false"></div>
+            </div>
+            <div id="linkPanel" data-options="region: 'center', border: false, title: '通知', iconCls: 'icon-hamburg-link', tools: [{ iconCls: 'icon-hamburg-refresh', handler: function () { window.link.reload(); } }]">
+            </div>
+        </div>
+    </div>
+	<div class="south" data-options="region:'south', title: '关于...', iconCls: 'icon-standard-information', border: false">
+        <div class="content">
+            @2001-2020 Copyright: Mini Personal.&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="http://www.hao123.com" target="_blank" style="text-decoration: none;">关于 Mini</a><br />建议使用&nbsp;
+            <a href="http://windows.microsoft.com/zh-CN/internet-explorer/products/ie/home" target="_blank" style="text-decoration: none;">IE(Version 9/10/11)</a>/
+            <a href="https://www.google.com/intl/zh-CN/chrome/browser/" target="_blank" style="text-decoration: none;">Chrome</a>/
+            <a href="http://firefox.com.cn/download/"  style="text-decoration: none;">Firefox</a>
+            &nbsp;系列浏览器。
+        </div>
+	</div>-->
+</body>
+</html>

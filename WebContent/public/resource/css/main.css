@@ -1,0 +1,18 @@
+
+.formTable{border: 1px solid #ccc;border-collapse: collapse; width:100%;}
+.formTable td{
+   border: 1px solid #ccc;
+   padding: 10px;
+}
+.formTable th{border: 0px;padding: 10px;text-align: left;border: 1px solid #ddedfb;}
+input{font-size: 12px;}
+input[type=radio]{width:10px;height:10px;}
+.table_left{
+	text-align: right;
+	background-color: #ddedfb;
+	font-size: 12px;
+	font-family:微软雅黑;
+}
+/*easyui btn样式*/
+.l-btn-text{margin: 0px 10px}
+.dialog-tool-separator{float: none;}

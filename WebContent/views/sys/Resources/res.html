@@ -1,0 +1,41 @@
+<form id="resourcesForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td class="table_left"><font color="red">*</font>类型：</td>
+		    <td colspan="3">
+		    <select id="type" name="type"></select>
+		    </td>
+		</tr>
+		<tr>
+			<td class="table_left"><font color="red">*</font>资源名称：</td>
+			<td>
+				<input type="hidden" name="id"/><input type="hidden" id="level" name="level"/>
+				<input name="name" data-options="required:true,width: 200" type="text" class="easyui-textbox"/> 
+			</td>
+			<td class="table_left"><font color="red">*</font>资源路径：</td>
+			<td><input name="url" id="url" data-options="width: 200" type="text" class="easyui-textbox"/></td>
+		</tr>
+		<tr>
+			<td class="table_left">权限编码：</td>
+			<td><input name="perm_code" id="permCode" type="text" class="easyui-textbox" data-options="width: 200"/></td>
+			<td class="table_left">排序：</td>
+			<td><input name="sort" data-options="width: 200,validType:'Number'" type="text" class="easyui-textbox"/></td>
+		</tr>
+		<tr>
+			<td class="table_left">菜单图标：</td>
+			<td>
+				<select class="easyui-combotree" data-options="width:200" id="icon" name="iconCls"></select>
+			</td>
+			<td class="table_left">上级菜单：</td>
+			<td><select name="parent_id" id="parentId"></select></td>
+		</tr>
+		<tr>
+			<td class="table_left"><font color="red">*</font>状态：</td>
+		    <td><select id="status" name="status"></select></td>
+			<td class="table_left">描述：</td>
+			<td>
+				<input class="easyui-textbox" name="remark" data-options="multiline:true" value="" style="width:250px;height:80px">
+			</td>
+		</tr>
+	</table>
+</form>

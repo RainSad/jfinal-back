@@ -1,0 +1,20 @@
+<#include "../../core/head.html" />
+<script type="text/javascript" src="${ctx}/public/js/sys/Log.js"></script>
+<body class="easyui-layout">
+<table id="log_datagrid"></table>
+
+<div id="log_toolbar" style="padding:5px;height:auto;">
+    <div style="margin-left:2px;">
+	 <a class="easyui-linkbutton" id="del_log" data-options="iconCls:'icon-remove',plain:true">删除</a><span class="toolbar-item dialog-tool-separator"></span>
+	 <a class="easyui-linkbutton" id="log_excel" data-options="iconCls:'icon-metro-file-excel',plain:true">导出日志</a>
+	</div>
+	<div style="margin-left:2px;">
+	  <form action="#" id="logSearchForm" style="display:inline;">
+	  	<span style="margin-left:2px;">用户名: <input class="easyui-textbox" style="width:100px;" name="optUser"></input></span>
+	  	<span style="margin-left:2px;">姓名: <input class="easyui-textbox" style="width:100px;" name="realname"></input></span>
+	    <span style="margin-left:2px;"> 记录时间: <input class="easyui-datebox" style="width:100px;" name="startTime"></input>-<input class="easyui-datebox" name="endTime" style="width:100px"></input></span>
+	     <a href="#" class="easyui-linkbutton" style="width:100px;" id="search_log" data-options="iconCls:'icon-search'">查询</a>
+      </form>
+   </div>
+</div>
+</body>

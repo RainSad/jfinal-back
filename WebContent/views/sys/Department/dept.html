@@ -1,0 +1,27 @@
+<form id="deptForm" method="post">
+	<table class="formTable">
+		<tr>
+			<td class="table_left"><font color="red">*</font>部门名称：</td>
+			<td>
+				<input type="hidden" name="id"/>
+				<input name="dept_name" data-options="required:true,width: 200" type="text" class="easyui-textbox"/> 
+			</td>
+			<td class="table_left">部门电话：</td>
+			<td><input name="dept_phone" type="text" class="easyui-textbox" data-options="width: 200"/></td>
+		</tr>
+		<tr>
+			<td class="table_left"><font color="red">*</font>类型：</td>
+			<td><select name="type" data-options="required:true" id="type"></select></td>
+		<td class="table_left">上级部门：</td>
+			<td><select name="parent_id" id="parentId"></select></td>
+		</tr>
+		<tr>
+			<td class="table_left">部门地址：</td>
+			<td><input name="dept_address" data-options="width: 200" type="text" class="easyui-textbox"/></td>
+			<td class="table_left">描述：</td>
+			<td>
+				<input class="easyui-textbox" name="remark" data-options="multiline:true" value="" style="width:250px;height:80px">
+			</td>
+		</tr>
+	</table>
+</form>
