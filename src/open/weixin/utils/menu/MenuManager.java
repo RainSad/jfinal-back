@@ -18,8 +18,8 @@ public class MenuManager  {
 		   ApiConfig ac = new ApiConfig();
 			
 			// 配置微信 API 相关常量
-			ac.setAppId("wx7d9d3839bcf7a60b");
-			ac.setAppSecret("d0599149813c0a057a334a248788c694");
+			ac.setAppId("*******");
+			ac.setAppSecret("*******");
 		    ApiConfigKit.setThreadLocalApiConfig(ac);
 		   
 		   //创建菜单
