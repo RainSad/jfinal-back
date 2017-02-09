@@ -27,9 +27,9 @@ import cn.wawi.utils.DateUtil;
 public class WeixinPayController extends Controller {
 	static Log logger = Log.getLog(WeixinPayController.class);
 	//商户相关资料
-	private static String appid = "wx7d9d3839bcf7a60b";
-	private static String partner = "1397982802";
-	private static String paternerKey = "928bfd2577490322a6e19b793691467e";
+	private static String appid =PropKit.get("appId");
+	private static String partner = PropKit.get("partner");
+	private static String paternerKey =PropKit.get("paternerKey");
 	private static String notify_url = "http://lanyan.hbwwcc.com/lanyan/weixin/lanyan/notify.html";
 	
 	/**
